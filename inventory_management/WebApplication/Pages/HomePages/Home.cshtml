@@ -1,0 +1,33 @@
+﻿@page
+@model WebApplication.Pages.HomePages.HomeModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Login page";
+    var errorMsg = Model.errorMSg;   
+}
+<h2 style="text-align: center; margin-top: 30px">Login Page</h2>
+<div class="" style="width: 30%; margin: auto">
+    <form method="post" class="m-2 p-3 bg-light">
+        @{
+            if(errorMsg != null){
+                <span class="text-danger">@errorMsg</span>
+            }          
+        }
+        <div class="form-group">
+            <label asp-for="User.Username"></label>
+            <input class="form-control" asp-for="User.Username"/>
+            <span asp-validation-for="User.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="User.Password"></label>
+            <input type="password" class="form-control" asp-for="User.Password"/>
+            <span asp-validation-for="User.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <div>
+                <input type="submit" class="btn btn-primary" value="Login"/>
+            </div>        
+        </div>
+
+    </form>
+</div>
