@@ -1,4 +1,4 @@
-use master
+﻿use master
 go
 drop database if exists [InventoryManagement]
 create database [InventoryManagement]
@@ -13,6 +13,11 @@ CREATE TABLE [dbo].[Role](
 );
 GO
 
+INSERT INTO [Role] (name) VALUES (N'ADMIN')
+INSERT INTO [Role] (name) VALUES (N'STAFF')
+
+SELECT * FROM Role
+
 CREATE TABLE [dbo].[User](
 	userID INT IDENTITY(1,1) NOT NULL PRIMARY KEY, 
 	username nvarchar(50) NOT NULL UNIQUE,
@@ -26,6 +31,21 @@ CREATE TABLE [dbo].[User](
 	[status] INT NOT NULL, -- 0: unactive, 1: active
 );
 GO
+
+INSERT INTO [User] (username, fullName, [password], roleID, gender, birthDay, phoneNumber, address, status)
+VALUES (N'admin@gmail.com',N'Nguyễn Văn Admin', N'123', 0, 1, '10/10/2023', '1234556789', 'TP.HCM',1);
+
+INSERT INTO [User] (username, fullName, [password], roleID, gender, birthDay, phoneNumber, address, status)
+VALUES (N'user@gmail.com',N'Bùi Thị Khách', N'123', 0, 0, '09/09/2023', '1234556789', 'TP.HCM',1);
+
+INSERT INTO [User] (username, fullName, [password], roleID, gender, birthDay, phoneNumber, address, status)
+VALUES (N'user1@gmail.com',N'Nguyễn Văn A', N'123', 1, 0, '09/09/2023', '1234556789', 'TP.HCM',1);
+
+INSERT INTO [User] (username, fullName, [password], roleID, gender, birthDay, phoneNumber, address, status)
+VALUES (N'user2@gmail.com',N'Nguyễn Van B', N'123', 1, 0, '09/09/2023', '1234556789', 'TP.HCM',1);
+
+INSERT INTO [User] (username, fullName, [password], roleID, gender, birthDay, phoneNumber, address, status)
+VALUES (N'user3@gmail.com',N'Nguyễn Văn C', N'123', 1, 0, '09/09/2023', '1234556789', 'TP.HCM',1);
 
 ALTER TABLE [User] 
 ADD CONSTRAINT FK_ROLEID_USER FOREIGN KEY (roleID) REFERENCES [Role](RoleID)
@@ -149,3 +169,6 @@ ALTER TABLE [Invoice_OutputDetails]
 ADD CONSTRAINT FK_PRODUCT_ID_INVOICE_OUTPUTDETAILS FOREIGN KEY (productID) REFERENCES [Product](productID)
 ALTER TABLE [Invoice_OutputDetails] 
 ADD CONSTRAINT FK_CONSIGNMENT_ID_INVOICE_OUTPUTDETAILS FOREIGN KEY (consignmentID) REFERENCES [Consignment](consignmentID)
+
+
+

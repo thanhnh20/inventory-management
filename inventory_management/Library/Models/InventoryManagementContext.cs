@@ -31,6 +31,8 @@ namespace Library.Models
         public virtual DbSet<Suplier> Supliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = MyServices.GetConnectionString();
