@@ -35,7 +35,7 @@ namespace Library.DataAccess
 
         public IEnumerable<User> GetUserList()
         {
-            List<User> users;
+            /*List<User> users;
             try
             {
                 users = db.Users.ToList();
@@ -44,7 +44,15 @@ namespace Library.DataAccess
             {
                 throw new Exception(ex.Message);
             }
-            return users;
+            return users;*/
+
+            var list = new List<User>();
+            using(var db = new InventoryManagementContext()) 
+            {
+                list = db.Users.ToList();
+            }
+
+            return list;
         }
 
         public User GetUserByID(int userID)
@@ -85,10 +93,11 @@ namespace Library.DataAccess
         public void InsertUser(User user)
         {
             User check = GetUserByID(user.UserId);
-            if (check != null)
+            if (check == null)
             {
                 using (var db = new InventoryManagementContext())
                 {
+                    check = db.Users.Where(m => m.UserId == user.UserId).First();
                     db.Users.Add(new User
                     {
                         Username = user.Username,
@@ -103,11 +112,12 @@ namespace Library.DataAccess
                     });
 
                     db.SaveChanges();
+                    Console.WriteLine("Save successfully");
                 }
             }
             else
             {
-                throw new Exception("Save succesfully");
+                throw new Exception("User exists already!");
             }
         }
 

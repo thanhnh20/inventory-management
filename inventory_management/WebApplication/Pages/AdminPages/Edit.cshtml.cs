@@ -41,7 +41,7 @@ namespace WebApplication.Pages.AdminPages
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             userRepository = new UserRepository();
 
@@ -50,8 +50,15 @@ namespace WebApplication.Pages.AdminPages
                 return Page();
             }
            
-            userRepository.UpdateUser(User);
-             
+            if(User.UserId == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                userRepository.UpdateUser(User);
+            }
+ 
             return RedirectToPage("./MainPage");
         }
 
