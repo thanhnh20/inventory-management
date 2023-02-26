@@ -9,8 +9,6 @@ namespace Library.Repository
 {
     public interface IUserRepository
     {
-        
-
         public User checkLogin(string username, string password);
         IEnumerable<User> GetUserList();
         User GetUserByID(int userID);
