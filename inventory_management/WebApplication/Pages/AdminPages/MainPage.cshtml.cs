@@ -9,16 +9,37 @@ using System.Linq;
 namespace WebApplication.Pages.AdminPages
 {
     public class MainPageModel : PageModel
-    {
-
+    {   
+        
         private IUserRepository userRepository;
 
         public IList<User> User { get; set; }
 
-        public void OnGet()
+        public string SearchString { get; set; }
+
+        public void OnGet(string searchString)
         {
             userRepository = new UserRepository();
-            User = userRepository.GetUserList().ToList();
+            if (searchString != null)
+            {
+                SearchString= searchString;
+                var task = userRepository.SearchByNameAndId(searchString);
+                if(task == null) 
+                {
+                    User = userRepository.GetUserList().ToList();
+                }
+                else
+                {
+                    User = (IList<User>)task;
+                }
+            }
+            else
+            {
+                User = (IList<User>) userRepository.GetUserList();
+            }
+            
+            /*userRepository = new UserRepository();
+            User = userRepository.GetUserList().ToList();*/
         }
 
         public IActionResult OnGetLogout()

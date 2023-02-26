@@ -20,6 +20,8 @@ namespace Library.Repository.RepositoryImpl
 
         public void InsertUser(User user) => UserDAO.Instance.InsertUser(user);
 
+        public IEnumerable<User> SearchByNameAndId(string searchValue) => UserDAO.Instance.SearchByNameAndId(searchValue);
+
         public void UpdateUser(User user) => UserDAO.Instance.UpdateUser(user);
 
     }

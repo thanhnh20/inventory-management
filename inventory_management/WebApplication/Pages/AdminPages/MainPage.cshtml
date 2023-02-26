@@ -9,10 +9,10 @@
 <p>
     <a asp-page="Create" class="btn btn-success">Create New</a>
 </p>
-<div class="input-group">
-    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-    <button type="button" class="btn btn-outline-primary">search</button>
-</div>
+<form method="get">
+    <input type="text" name="searchString" />
+    <button type="submit">Search</button>
+</form>
 <div class="table-responsive">
 <table class="table">
     <thead class="table-primary">
