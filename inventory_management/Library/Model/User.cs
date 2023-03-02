@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
-namespace Library.Models
+namespace Library.Model
 {
     public partial class User
     {
         public User()
         {
             InvoiceInputs = new HashSet<InvoiceInput>();
+            InvoiceOutputs = new HashSet<InvoiceOutput>();
         }
 
         public int UserId { get; set; }
-        [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }
         public string FullName { get; set; }
-        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
         public int RoleId { get; set; }
         public int? Gender { get; set; }
@@ -28,5 +26,6 @@ namespace Library.Models
 
         public virtual Role Role { get; set; }
         public virtual ICollection<InvoiceInput> InvoiceInputs { get; set; }
+        public virtual ICollection<InvoiceOutput> InvoiceOutputs { get; set; }
     }
 }

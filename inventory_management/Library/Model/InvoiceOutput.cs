@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Library.Models
+namespace Library.Model
 {
     public partial class InvoiceOutput
     {
@@ -18,6 +18,8 @@ namespace Library.Models
         public DateTime OutputDate { get; set; }
         public double? Amount { get; set; }
 
+        public virtual Customer Customer { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<InvoiceOutputDetail> InvoiceOutputDetails { get; set; }
     }
 }

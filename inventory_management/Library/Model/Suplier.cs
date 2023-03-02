@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Library.Models
+namespace Library.Model
 {
     public partial class Suplier
     {

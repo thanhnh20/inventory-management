@@ -1,11 +1,10 @@
 ﻿using System;
-using Library.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Library.Models
+namespace Library.Model
 {
     public partial class InventoryManagementContext : DbContext
     {
@@ -20,29 +19,24 @@ namespace Library.Models
 
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Consignment> Consignments { get; set; }
+        public virtual DbSet<ConsignmentDetail> ConsignmentDetails { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<InvoiceInput> InvoiceInputs { get; set; }
         public virtual DbSet<InvoiceInputDetail> InvoiceInputDetails { get; set; }
         public virtual DbSet<InvoiceOutput> InvoiceOutputs { get; set; }
         public virtual DbSet<InvoiceOutputDetail> InvoiceOutputDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<ProductConsignment> ProductConsignments { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Suplier> Supliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = MyServices.GetConnectionString();
-            optionsBuilder.UseSqlServer(connectionString);
-            /*
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=12345;Database=InventoryManagement");
-            }*/
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -73,6 +67,31 @@ namespace Library.Models
                 entity.Property(e => e.Status).HasColumnName("status");
             });
 
+            modelBuilder.Entity<ConsignmentDetail>(entity =>
+            {
+                entity.ToTable("Consignment_Detail");
+
+                entity.Property(e => e.ConsignmentDetailId).HasColumnName("consignmentDetailID");
+
+                entity.Property(e => e.ConsignmentId).HasColumnName("consignmentID");
+
+                entity.Property(e => e.ProductId).HasColumnName("productID");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.Consignment)
+                    .WithMany(p => p.ConsignmentDetails)
+                    .HasForeignKey(d => d.ConsignmentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CONSIGNMENT_ID_PRODUCT_CONSIGNMENT");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.ConsignmentDetails)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Product_ID_PRODUCT_CONSIGNMENT");
+            });
+
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.ToTable("Customer");
@@ -98,7 +117,7 @@ namespace Library.Models
             modelBuilder.Entity<InvoiceInput>(entity =>
             {
                 entity.HasKey(e => e.InputBillId)
-                    .HasName("PK__Invoice___7FFF4C3695C1B08D");
+                    .HasName("PK__Invoice___7FFF4C36FD16FF10");
 
                 entity.ToTable("Invoice_Input");
 
@@ -130,7 +149,7 @@ namespace Library.Models
             modelBuilder.Entity<InvoiceInputDetail>(entity =>
             {
                 entity.HasKey(e => e.InputDetailId)
-                    .HasName("PK__Invoice___357FF83DD091FD96");
+                    .HasName("PK__Invoice___357FF83DDE625367");
 
                 entity.ToTable("Invoice_InputDetails");
 
@@ -139,8 +158,6 @@ namespace Library.Models
                 entity.Property(e => e.ConsignmentId).HasColumnName("consignmentID");
 
                 entity.Property(e => e.InputBillId).HasColumnName("inputBillID");
-
-                entity.Property(e => e.ProductId).HasColumnName("productID");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
@@ -157,18 +174,12 @@ namespace Library.Models
                     .HasForeignKey(d => d.InputBillId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_INPUTBILL_ID_Invoice_InputDetails");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.InvoiceInputDetails)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PRODUCT_ID_INVOICE_INPUTDETAILS");
             });
 
             modelBuilder.Entity<InvoiceOutput>(entity =>
             {
                 entity.HasKey(e => e.OutputBillId)
-                    .HasName("PK__Invoice___D62D78DB696ED345");
+                    .HasName("PK__Invoice___D62D78DBC785E469");
 
                 entity.ToTable("Invoice_Output");
 
@@ -183,12 +194,24 @@ namespace Library.Models
                     .HasColumnName("outputDate");
 
                 entity.Property(e => e.UserId).HasColumnName("userID");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.InvoiceOutputs)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CUSTOMERID_ID_INVOICE_OUTPUT");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.InvoiceOutputs)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_USER_ID_INVOICE_OUTPUT");
             });
 
             modelBuilder.Entity<InvoiceOutputDetail>(entity =>
             {
                 entity.HasKey(e => e.OutputDetailId)
-                    .HasName("PK__Invoice___A01DBC9893EBDE3F");
+                    .HasName("PK__Invoice___A01DBC981BACEA19");
 
                 entity.ToTable("Invoice_OutputDetails");
 
@@ -197,8 +220,6 @@ namespace Library.Models
                 entity.Property(e => e.ConsignmentId).HasColumnName("consignmentID");
 
                 entity.Property(e => e.OutputBillId).HasColumnName("outputBillID");
-
-                entity.Property(e => e.ProductId).HasColumnName("productID");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
@@ -215,12 +236,6 @@ namespace Library.Models
                     .HasForeignKey(d => d.OutputBillId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OUTPUTBILL_ID_INVOICE_OUTPUTDETAILS");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.InvoiceOutputDetails)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PRODUCT_ID_INVOICE_OUTPUTDETAILS");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -230,8 +245,6 @@ namespace Library.Models
                 entity.Property(e => e.ProductId).HasColumnName("productID");
 
                 entity.Property(e => e.CategoryId).HasColumnName("categoryID");
-
-                entity.Property(e => e.ConsignmentId).HasColumnName("consignmentID");
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
@@ -245,36 +258,15 @@ namespace Library.Models
 
                 entity.Property(e => e.TotalQuantity).HasColumnName("totalQuantity");
 
-                entity.HasOne(d => d.Consignment)
+                entity.Property(e => e.Unit)
+                    .HasMaxLength(50)
+                    .HasColumnName("unit");
+
+                entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.ConsignmentId)
+                    .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CONSIGNMENT_ID_PRODUCT");
-            });
-
-            modelBuilder.Entity<ProductConsignment>(entity =>
-            {
-                entity.ToTable("Product_Consignment");
-
-                entity.Property(e => e.ProductConsignmentId).HasColumnName("productConsignmentID");
-
-                entity.Property(e => e.ConsignmentId).HasColumnName("consignmentID");
-
-                entity.Property(e => e.ProductId).HasColumnName("productID");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
-                entity.HasOne(d => d.Consignment)
-                    .WithMany(p => p.ProductConsignments)
-                    .HasForeignKey(d => d.ConsignmentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CONSIGNMENT_ID_PRODUCT_CONSIGNMENT");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.ProductConsignments)
-                    .HasForeignKey(d => d.ProductId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Product_ID_PRODUCT_CONSIGNMENT");
+                    .HasConstraintName("FK_CATEGORY_ID_PRODUCT");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -293,7 +285,7 @@ namespace Library.Models
             {
                 entity.ToTable("Suplier");
 
-                entity.HasIndex(e => e.TaxCode, "UQ__Suplier__D97858A61A926A76")
+                entity.HasIndex(e => e.TaxCode, "UQ__Suplier__D97858A68F57E08B")
                     .IsUnique();
 
                 entity.Property(e => e.SuplierId).HasColumnName("suplierID");
@@ -320,7 +312,7 @@ namespace Library.Models
             {
                 entity.ToTable("User");
 
-                entity.HasIndex(e => e.Username, "UQ__User__F3DBC5725FACB6AA")
+                entity.HasIndex(e => e.Username, "UQ__User__F3DBC5721A703B97")
                     .IsUnique();
 
                 entity.Property(e => e.UserId).HasColumnName("userID");

@@ -1,4 +1,4 @@
-using Library.Models;
+using Library.Model;
 using Library.Repository;
 using Library.Repository.RepositoryImpl;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +21,10 @@ namespace WebApplication.Pages.AdminPages
             User = userRepository.GetUserList().ToList();
         }
 
-        public IActionResult OnGetLogout()
+        public IActionResult OnGetLogOut()
         {
             HttpContext.Session.Remove("ADMIN");
-            return RedirectToPage("/Login");
+            return Redirect("~/HomePages/Home");
         }
 
     }
