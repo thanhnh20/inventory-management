@@ -1,8 +1,10 @@
 using Library.Models;
 using Library.Repository;
 using Library.Repository.RepositoryImpl;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,14 +19,26 @@ namespace WebApplication.Pages.AdminPages
 
         public string SearchString { get; set; }
 
-        public void OnGet(string searchString)
+        public User CurUser { get; set; }
+
+        public IActionResult OnGet(string searchString)
         {
+            
+            CurUser = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("ADMIN"));
+            if(CurUser == null)
+            {
+                CurUser = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
+                if(CurUser == null)
+                {
+                   return RedirectToPage("/Login");
+                }
+            }
             userRepository = new UserRepository();
             if (searchString != null)
             {
                 SearchString= searchString;
                 var task = userRepository.SearchByNameAndId(searchString);
-                if(task == null) 
+                if (task == null) 
                 {
                     User = userRepository.GetUserList().ToList();
                 }
@@ -37,9 +51,7 @@ namespace WebApplication.Pages.AdminPages
             {
                 User = (IList<User>) userRepository.GetUserList();
             }
-            
-            /*userRepository = new UserRepository();
-            User = userRepository.GetUserList().ToList();*/
+            return Page();
         }
 
         public IActionResult OnGetLogout()
