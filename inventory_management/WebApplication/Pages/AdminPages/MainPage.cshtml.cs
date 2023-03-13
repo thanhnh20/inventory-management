@@ -1,6 +1,6 @@
+using DataAccess.Repository;
+using DataAccess.Repository.RepositoryImpl;
 using Library.Model;
-using Library.Repository;
-using Library.Repository.RepositoryImpl;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
