@@ -1,0 +1,44 @@
+﻿@page
+@model WebApplication.Pages.Suppliers.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_StaffLayout";
+}
+
+<h4>New Supplier</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Suplier.SuplierName" class="control-label"></label>
+                <input asp-for="Suplier.SuplierName" class="form-control" />
+                <span asp-validation-for="Suplier.SuplierName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suplier.SuplierPhone" class="control-label"></label>
+                <input asp-for="Suplier.SuplierPhone" class="form-control" />
+                <span asp-validation-for="Suplier.SuplierPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suplier.TaxCode" class="control-label"></label>
+                <input asp-for="Suplier.TaxCode" class="form-control" />
+                <span asp-validation-for="Suplier.TaxCode" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Suplier.Status" value = "0" class="form-control" />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
