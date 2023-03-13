@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Library.Model;
-using DataAccess.Repository;
-using DataAccess.Repository.RepositoryImpl;
+using Library.Repository;
+using Library.Repository.RepositoryImpl;
 
 namespace WebApplication.Pages.AdminPages
 {
