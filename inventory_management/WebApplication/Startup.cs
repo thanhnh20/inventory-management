@@ -1,3 +1,6 @@
+using DataAccess.Repository;
+using DataAccess.Repository.RepositoryImpl;
+using Library.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +33,10 @@ namespace WebApplication
             });
             // set index page
             services.AddMvc().AddRazorPagesOptions(options => options.Conventions.AddPageRoute("/HomePages/Home", ""));
-
+            services.AddTransient<InventoryManagementContext>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ISuplierRepository, SuplierRepository>();
+            services.AddAutoMapper(typeof(Program));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
