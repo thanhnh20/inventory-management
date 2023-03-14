@@ -1,6 +1,6 @@
+using DataAccess.Repository;
+using DataAccess.Repository.RepositoryImpl;
 using Library.Model;
-using Library.Repository;
-using Library.Repository.RepositoryImpl;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,11 +15,9 @@ namespace WebApplication.Pages.HomePages
     public class HomeModel : PageModel
     {
         private IUserRepository userRepository;
-        private IConfiguration config;
-        public HomeModel(IConfiguration config)
+        public HomeModel()
         {
             userRepository = new UserRepository();
-            this.config = config;
         }
 
         [BindProperty]
@@ -32,7 +30,6 @@ namespace WebApplication.Pages.HomePages
 
         public IActionResult OnPost()
         {
-            
             if(User.Username != null && User.Password != null)
             {
                 var account = userRepository.checkLogin(User.Username, User.Password);
