@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="1. Data Acess\**" />
+    <Compile Remove="CustomValidation\**" />
     <EmbeddedResource Remove="1. Data Acess\**" />
+    <EmbeddedResource Remove="CustomValidation\**" />
     <None Remove="1. Data Acess\**" />
+    <None Remove="CustomValidation\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +24,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CustomValidation\" />
   </ItemGroup>
 
 </Project>
