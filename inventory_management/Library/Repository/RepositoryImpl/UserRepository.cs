@@ -22,6 +22,11 @@ namespace Library.Repository.RepositoryImpl
 
         public IEnumerable<User> SearchByNameAndId(string searchValue) => UserDAO.Instance.SearchByNameAndId(searchValue);
 
+        public void UpdateStatusUser(User userD)
+        {
+            UserDAO.Instance.UpdateStatusUser(userD);
+        }
+
         public void UpdateUser(User user) => UserDAO.Instance.UpdateUser(user);
 
     }

@@ -1,9 +1,14 @@
 ﻿using Library.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace Library.DataAccess
 {
@@ -28,9 +33,19 @@ namespace Library.DataAccess
                 }
             }
         }
+        public IEnumerable<Product> GetAll()
+        {
+            return db.Products.Include(p => p.Category);
+        }
+        public void Add(Product product)
+        {
+            db.Add(product);
+            db.SaveChanges();
+        }
 
-        public Product GetProductByID(int productID) => db.Products.Find(productID);
+        public Product GetProductByID(int productID) => db.Products.Where(m => m.ProductId == productID).FirstOrDefault();
 
         public List<Product> GetProduct() => db.Products.ToList();
+
     }
 }

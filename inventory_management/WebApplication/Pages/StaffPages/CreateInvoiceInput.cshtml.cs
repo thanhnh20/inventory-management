@@ -50,10 +50,10 @@ namespace WebApplication.Pages.StaffPages
 
         public IActionResult OnGet(int ProductId)
         {
-            
-                //var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-               
-                    try
+
+            //var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
+
+            try
                     {
                         var AccountSessioan = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
                         var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
@@ -65,8 +65,7 @@ namespace WebApplication.Pages.StaffPages
                     {
                         Msg = "List Invoice input is null";
                     }
-                
-            
+                 
                 return Page();
         }
 
@@ -107,7 +106,8 @@ namespace WebApplication.Pages.StaffPages
                         var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
                         if (ListInvoiceInput != null)
                         {
-                            var product = productRepository.GetProductById(ProductId); 
+                            var product = productRepository.GetProductById(ProductId);
+                            product.Category.Products = null;
                             var productCheck = ListInvoiceInput.Where(x => x.ProductId == ProductId).FirstOrDefault();
                             if (productCheck != null)
                             {
@@ -125,6 +125,7 @@ namespace WebApplication.Pages.StaffPages
                     {
                         var ListInvoiceInput = new List<Product>();
                         var product = productRepository.GetProductById(ProductId);
+                        product.Category.Products = null;
                         product.TotalQuantity = 1;
                         ListInvoiceInput.Add(product);
                         HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
@@ -134,7 +135,7 @@ namespace WebApplication.Pages.StaffPages
                 {
                     Error = "Session is null";
                 }
-                return RedirectToPage("Statistic");               
+                return RedirectToPage("MainPage");               
             
         }
               
@@ -200,7 +201,7 @@ namespace WebApplication.Pages.StaffPages
             {
                 Error = "Login before do anything";
             }
-            return Page();
+            return RedirectToPage();
         }
     }
 }

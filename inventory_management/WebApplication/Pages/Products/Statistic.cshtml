@@ -80,10 +80,7 @@
                 <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
             </td>
-            <td>
-                <a class="btn btn-primary" asp-page="./CreateInvoiceInput" asp-page-handler="AddInvoiceInput" asp-route-ProductId="@item.ProductId">Invoice Input</a>          
-                <a class="btn btn-info" asp-page="./CreateInvoiceOutput" asp-route-ProductId="@item.ProductId">Invoice Output</a>     
-            </td>
+            
         </tr>
 }
     </tbody>

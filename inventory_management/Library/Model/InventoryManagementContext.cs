@@ -11,8 +11,10 @@ namespace Library.Model
 {
     public partial class InventoryManagementContext : DbContext
     {
+        public MyServices myServices;
         public InventoryManagementContext()
         {
+            myServices = new MyServices();
         }
 
         public InventoryManagementContext(DbContextOptions<InventoryManagementContext> options)

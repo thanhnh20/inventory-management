@@ -4,74 +4,84 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Delete";
+    var error = Model.Error;
 }
+@{
+    if (error != null)
+    {
+        <h2 class="text-danger">Login before do anything !!!</h2>
+        <a asp-page="MainPage" asp-page-handler="Login">Click to login</a>
+    }
+    else
+    {
+    <h1>Delete</h1>
 
-<h1>Delete</h1>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>User</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.Username)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Username)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.FullName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.FullName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.Password)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Password)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.Gender)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Gender)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.BirthDay)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.BirthDay)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.PhoneNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.PhoneNumber)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Address)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.Status)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Status)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.User.Role)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.User.Role.Name)
+            </dd>
+        </dl>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Username)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Username)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.FullName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.FullName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Password)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.BirthDay)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.BirthDay)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.PhoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.PhoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Role)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Role.Name)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="User.UserId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./MainPage">Back to List</a>
-    </form>
-</div>
+        <form method="post">
+            <input type="hidden" asp-for="User.UserId" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-page="./MainPage">Back to List</a>
+        </form>
+    </div>
+    }
+}

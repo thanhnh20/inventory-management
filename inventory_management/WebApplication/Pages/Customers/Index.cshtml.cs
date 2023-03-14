@@ -12,12 +12,12 @@ using AutoMapper;
 
 namespace WebApplication.Pages.Customers
 {
-    public class IndexCustomerModel : PageModel
+    public class IndexCustomer : PageModel
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IMapper _mapper;
 
-        public IndexCustomerModel(IMapper mapper, ICustomerRepository customerRepository)
+        public IndexCustomer(IMapper mapper, ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
             _mapper = mapper;
