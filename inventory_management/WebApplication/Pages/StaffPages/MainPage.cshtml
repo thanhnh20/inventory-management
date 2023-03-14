@@ -24,6 +24,9 @@
             <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.Product[0].ProductName)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Product[0].Description)
                     </th>
                     <th>
@@ -47,13 +50,17 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Product[0].Category)
                     </th>
-                    <th></th>
+                    <th>Action</th>
+                    <th>Add to Invoice</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Product)
                 {
                     <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
@@ -82,6 +89,10 @@
                             <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
                             <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
                             <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-page="./CreateInvoiceInput" asp-page-handler="AddInvoiceInput" asp-route-ProductId="@item.ProductId">Invoice Input</a> 
+                            <a class="btn btn-info" asp-page="./CreateInvoiceOutput" asp-page-handler="AddInvoiceOutput" asp-route-ProductId="@item.ProductId">Invoice Output</a> 
                         </td>
                     </tr>
                 }

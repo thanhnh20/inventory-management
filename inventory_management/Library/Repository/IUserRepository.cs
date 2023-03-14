@@ -15,6 +15,7 @@ namespace Library.Repository
         void UpdateUser(User user);
         void InsertUser(User user);
         void DeleteUser(User user);
+        IEnumerable<User> SearchByNameAndId(string searchValue);
         void UpdateStatusUser(User userD);
     }
 }

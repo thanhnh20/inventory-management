@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using Library.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -37,7 +39,6 @@ namespace Library.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer(MyServices.GetConnectionString());
             }
         }
@@ -101,14 +102,9 @@ namespace Library.Model
 
                 entity.Property(e => e.CustomerId).HasColumnName("customerID");
 
-                entity.Property(e => e.CustomerAddress)
-                    .HasMaxLength(50)
-                    .HasColumnName("customerAddress");
+                entity.Property(e => e.CustomerAddress).HasColumnName("customerAddress");
 
-                entity.Property(e => e.CustomerName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("customerName");
+                entity.Property(e => e.CustomerName).HasColumnName("customerName");
 
                 entity.Property(e => e.CustomerPhone)
                     .HasMaxLength(11)
@@ -254,6 +250,10 @@ namespace Library.Model
                 entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.ImportPrice).HasColumnName("importPrice");
+
+                entity.Property(e => e.ProductName)
+                    .HasMaxLength(50)
+                    .HasColumnName("productName");
 
                 entity.Property(e => e.SellingPrice).HasColumnName("sellingPrice");
 

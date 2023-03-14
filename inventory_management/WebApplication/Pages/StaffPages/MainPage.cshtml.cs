@@ -14,6 +14,7 @@ namespace WebApplication.Pages.StaffPages
 {
     public class MainPageModel : PageModel
     {
+
         private readonly ILogger _logger;
         public string Error { get; set; }
         private readonly InventoryManagementContext _context;
@@ -25,9 +26,6 @@ namespace WebApplication.Pages.StaffPages
             _context = new InventoryManagementContext();
             _logger = logger;
         }
-
-
-
 
         public IList<Product> Product { get; set; }
 
@@ -41,7 +39,6 @@ namespace WebApplication.Pages.StaffPages
             }
             catch (Exception ex)
             {
-
                 _logger.LogError(ex.Message + " at MainPageModel");
                 Error = ex.Message;
 
@@ -52,6 +49,21 @@ namespace WebApplication.Pages.StaffPages
         {
             HttpContext.Session.Remove("STAFF");
             return Redirect(_urlHomePage);
+            /*
+        public IActionResult OnGet()
+        {
+            return RedirectToPage("../Products/Statistic");
+        }
+
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Remove("STAFF");
+            return Redirect("~/HomePages/Home");
+        }
+
+        public IActionResult OnGetLogin()
+        {
+            return Redirect("~/HomePages/Home");*/
         }
     }
 }

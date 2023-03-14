@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
+
+#nullable disable
 
 namespace Library.Model
 {
@@ -19,11 +21,14 @@ namespace Library.Model
         public string Unit { get; set; }
         public double? ImportPrice { get; set; }
         public double? SellingPrice { get; set; }
+        [Display(Name = "Quantity")]
         public int? TotalQuantity { get; set; }
         public int? Status { get; set; }
+        public string ProductName { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual ICollection<ConsignmentDetail> ConsignmentDetails { get; set; }
+        
         [Required(ErrorMessage = "Please choose Front image")]
         [Display(Name = "Front Image")]
         [NotMapped]

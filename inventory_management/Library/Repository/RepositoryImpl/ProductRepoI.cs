@@ -11,20 +11,10 @@ namespace Library.Repository.RepositoryImpl
 {
     public class ProductRepoI : ProductRepo
     {
-        public ProductDAO productDAO;
-        public ProductRepoI() {
-            productDAO = new ProductDAO();
-        }
+        public void Add(Product product) => ProductDAO.Instance.Add(product);
 
-        public void Add(Product product)
-        {
-            productDAO.Add(product);
-        }
 
-        public IEnumerable<Product> GetAll()
-        {
-            return productDAO.GetAll();
-        }
+        public IEnumerable<Product> GetAll() => ProductDAO.Instance.GetAll();
         
     }
 }
