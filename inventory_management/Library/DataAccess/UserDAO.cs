@@ -68,6 +68,26 @@ namespace Library.DataAccess
             }
             return _user;
         }
+        public void UpdateStatusUser(User user)
+        {
+            User check = GetUserByID(user.UserId);
+            if (check != null)
+            {
+                using (var db = new InventoryManagementContext())
+                {
+                    check = db.Users.Where(m => m.UserId == user.UserId).First();
+                    check.Status = 0;
+                    db.SaveChanges();
+                    Console.WriteLine("Save successfully");
+                }
+            }
+            else
+            {
+                throw new Exception("User exists already!");
+            }
+
+
+        }
 
         public void DeleteUser(User user)
         {

@@ -20,6 +20,11 @@ namespace Library.Repository.RepositoryImpl
 
         public void InsertUser(User user) => UserDAO.Instance.InsertUser(user);
 
+        public void UpdateStatusUser(User userD)
+        {
+            UserDAO.Instance.UpdateStatusUser(userD);
+        }
+
         public void UpdateUser(User user) => UserDAO.Instance.UpdateUser(user);
 
     }

@@ -15,5 +15,6 @@ namespace Library.Repository
         void UpdateUser(User user);
         void InsertUser(User user);
         void DeleteUser(User user);
+        void UpdateStatusUser(User userD);
     }
 }

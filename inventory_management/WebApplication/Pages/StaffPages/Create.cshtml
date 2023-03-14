@@ -1,0 +1,103 @@
+﻿@page
+@model WebApplication.Pages.StaffPages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    var error = Model.Error;
+}
+@{
+    if (error != null)
+    {
+        <h2 class="text-danger">Login before do anything !!!</h2>
+        <a href="/">Click to login</a>
+    }
+    else
+    {
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.Description" class="control-label"></label>
+                <input asp-for="Product.Description" class="form-control" />
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" asp-for="Product.CategoryId">
+                            @foreach (var ct in Model.categories)
+                            {
+                                <option value="@ct.CategoryId">@ct.CategoryName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+
+                    </div>
+            <div class="form-group">
+                        <label asp-for="Product.FrontImage" class="control-label"></label>
+                <div class="custom-file">
+                            <input asp-for="Product.FrontImage" class="custom-file-input" id="FLFrontImage"
+                            onchange="document.getElementById('FrontImagePrv').src = window.URL.createObjectURL(this.files[0])"/>
+
+                            <label class="custom-file-label" for="FLFrontImage"> Choose file</label>
+                </div>
+                <span asp-validation-for="Product.FrontImage" class="text-danger"></span>    
+                <img id="FrontImagePrv" src="" alt="Logo Image" width="150" height="150" 
+                style="border: 1px; margin-top: 20px; margin-left: 120px;"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Unit" class="control-label"></label>
+                <input asp-for="Product.Unit" class="form-control" />
+                <span asp-validation-for="Product.Unit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.ImportPrice" class="control-label"></label>
+                <input asp-for="Product.ImportPrice" class="form-control" />
+                <span asp-validation-for="Product.ImportPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.SellingPrice" class="control-label"></label>
+                <input asp-for="Product.SellingPrice" class="form-control" />
+                <span asp-validation-for="Product.SellingPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.TotalQuantity" class="control-label"></label>
+                <input asp-for="Product.TotalQuantity" class="form-control" />
+                <span asp-validation-for="Product.TotalQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Status" class="control-label"></label>
+                <input asp-for="Product.Status" class="form-control" />
+                <span asp-validation-for="Product.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="MainPage">Back to List</a>
+</div>
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+
+
+            <script type="text/javascript">
+                                    $(".custom-file-input").on("change", function () {
+                                        var fileName = $(this).val().split("\\").pop();
+                                        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                                    });    
+            </script>
+
+            
+            }
+    }
+}

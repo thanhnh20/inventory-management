@@ -1,4 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace Library.Model
 {
@@ -21,5 +24,9 @@ namespace Library.Model
 
         public virtual Category Category { get; set; }
         public virtual ICollection<ConsignmentDetail> ConsignmentDetails { get; set; }
+        [Required(ErrorMessage = "Please choose Front image")]
+        [Display(Name = "Front Image")]
+        [NotMapped]
+        public IFormFile FrontImage { get; set; }
     }
 }
