@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "WebApplication\WebApplication.csproj", "{B65C9A73-AB3F-4D44-BB07-9953E1D8D24C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{ABAB93A4-266C-47B5-8D0C-5D45BD4DF389}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{ABAB93A4-266C-47B5-8D0C-5D45BD4DF389}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

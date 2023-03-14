@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -19,8 +20,10 @@ namespace Library.Model
         public string Unit { get; set; }
         public double? ImportPrice { get; set; }
         public double? SellingPrice { get; set; }
+        [Display(Name = "Quantity")]
         public int? TotalQuantity { get; set; }
         public int? Status { get; set; }
+        public string ProductName { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual ICollection<ConsignmentDetail> ConsignmentDetails { get; set; }

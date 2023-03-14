@@ -5,8 +5,20 @@ namespace WebApplication.Pages.StaffPages
 {
     public class MainPageModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return RedirectToPage("../Products/Statistic");
+        }
+
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Remove("STAFF");
+            return Redirect("~/HomePages/Home");
+        }
+
+        public IActionResult OnGetLogin()
+        {
+            return Redirect("~/HomePages/Home");
         }
     }
 }

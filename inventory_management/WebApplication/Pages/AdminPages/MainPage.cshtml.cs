@@ -57,7 +57,7 @@ namespace WebApplication.Pages.AdminPages
         public IActionResult OnGetLogout()
         {
             HttpContext.Session.Remove("ADMIN");
-            return RedirectToPage("/Login");
+            return Redirect("~/HomePages/Home");
         }
 
     }
