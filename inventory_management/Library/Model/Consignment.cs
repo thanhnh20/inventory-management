@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -15,6 +16,7 @@ namespace Library.Model
         }
 
         public int ConsignmentId { get; set; }
+        [Required]
         public string ConsignmentName { get; set; }
         public int Status { get; set; }
 

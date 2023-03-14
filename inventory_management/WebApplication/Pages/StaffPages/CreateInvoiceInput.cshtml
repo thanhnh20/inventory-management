@@ -1,0 +1,113 @@
+﻿@page
+@model WebApplication.Pages.StaffPages.CreateInvoiceInputModel
+
+@{
+    ViewData["Title"] = "CreateInvoiceInput";
+    Layout = "~/Pages/Shared/_StaffLayout.cshtml";
+    var errorSession = Model.Error;
+    var msgError = Model.Msg;
+    var listProducts = Model.Products;
+}
+
+@{
+    if(errorSession != null)
+    {
+        <h2 class="text-danger">Login before do anything !!!</h2>
+        <a asp-page="MainPage" asp-page-handler="Login" >Click to login</a>
+    }
+    else
+    {
+        if(msgError != null || listProducts.Count == 0)
+    {
+        <h2 class="text-info">Select a product to create an Invoice</h2>
+        <a asp-page="../Products/Statistic" >Click to select</a>
+    }else{
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Products[0].ProductName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Products[0].Image)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Products[0].Category.CategoryName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Products[0].Unit)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Products[0].TotalQuantity)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Products) {
+                    <form method="post" asp-page-handler="ChangeQuantity">
+                        <tr>      
+                        <input asp-for="Product.ProductId" class="form-control" type="hidden" value="@item.ProductId"/>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProductName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Image)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Unit)
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" asp-for="Product.TotalQuantity" value="@item.TotalQuantity"/>
+                                <span asp-validation-for="Product.TotalQuantity" class="text-danger"></span>              
+                            </td>    
+                            <td>                         
+                                <input type="submit" value="Change Quantity" class="btn btn-info" />
+                            </td>
+                     
+                            <td>
+                                <a class="btn btn-danger" asp-page="./CreateInvoiceInput" asp-page-handler="RemoveProductInWaitInvoice" asp-route-ProductId="@item.ProductId">Remove</a>    
+                            </td>
+                        </tr>
+                    </form>
+                }
+                </tbody>
+            </table>
+
+
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="InvoiceInput.Suplier.SuplierName" class="control-label"></label>
+                            <select asp-for="InvoiceInput.SuplierId" class ="form-control" asp-items="ViewBag.SuplierName"></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="InvoiceInput.InputDate" class="control-label"></label>
+                            <input asp-for="InvoiceInput.InputDate" class="form-control" />
+                            <span asp-validation-for="InvoiceInput.InputDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Consignment.ConsignmentName" class="control-label"></label>
+                            <input asp-for="Consignment.ConsignmentName" class="form-control" />
+                            <span asp-validation-for="Consignment.ConsignmentName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        }               
+    }   
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
