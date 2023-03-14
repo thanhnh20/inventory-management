@@ -10,6 +10,8 @@ using Library.Model;
 using DataAccess.Repository;
 using WebApplication.Models;
 using AutoMapper;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication.Pages.Suppliers
 {
@@ -29,6 +31,16 @@ namespace WebApplication.Pages.Suppliers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var accountJson = HttpContext.Session.GetString("ADMIN");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
+            var account = JsonConvert.DeserializeObject<User>(accountJson);
+            if (account == null)
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
             if (id == null)
             {
                 return RedirectToPage("./Index");
@@ -46,6 +58,16 @@ namespace WebApplication.Pages.Suppliers
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var accountJson = HttpContext.Session.GetString("ADMIN");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
+            var account = JsonConvert.DeserializeObject<User>(accountJson);
+            if (account == null)
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
             if (!ModelState.IsValid)
             {
                 return Page();
