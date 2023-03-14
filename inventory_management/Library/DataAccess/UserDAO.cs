@@ -147,5 +147,11 @@ namespace Library.DataAccess
                 throw new Exception("Member does not exist!!!");
             }
         }
+
+        public IEnumerable<User> SearchByNameAndId(string searchValue)
+        {
+            var task = db.Users.Where(c => c.FullName.Contains(searchValue) || c.Username.Contains(searchValue)).ToList();
+            return task;
+        }
     }
 }

@@ -15,9 +15,11 @@ namespace WebApplication.Pages.HomePages
     public class HomeModel : PageModel
     {
         private IUserRepository userRepository;
-        public HomeModel()
+        private IConfiguration config;
+        public HomeModel(IConfiguration config)
         {
             userRepository = new UserRepository();
+            this.config = config;
         }
 
         [BindProperty]
@@ -30,6 +32,7 @@ namespace WebApplication.Pages.HomePages
 
         public IActionResult OnPost()
         {
+            
             if(User.Username != null && User.Password != null)
             {
                 var account = userRepository.checkLogin(User.Username, User.Password);
