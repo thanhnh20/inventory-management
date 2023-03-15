@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library.Model;
-using DataAccess.Repository;
 using WebApplication.Models;
 using AutoMapper;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Library.Repository;
 
 namespace WebApplication.Pages.Suppliers
 {
@@ -31,15 +31,15 @@ namespace WebApplication.Pages.Suppliers
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            var accountJson = HttpContext.Session.GetString("ADMIN");
+            var accountJson = HttpContext.Session.GetString("STAFF");
             if (string.IsNullOrEmpty(accountJson))
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             var account = JsonConvert.DeserializeObject<User>(accountJson);
             if (account == null)
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             if (id == null)
             {
@@ -58,15 +58,15 @@ namespace WebApplication.Pages.Suppliers
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            var accountJson = HttpContext.Session.GetString("ADMIN");
+            var accountJson = HttpContext.Session.GetString("STAFF");
             if (string.IsNullOrEmpty(accountJson))
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             var account = JsonConvert.DeserializeObject<User>(accountJson);
             if (account == null)
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             if (!ModelState.IsValid)
             {

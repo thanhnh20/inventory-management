@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Library.Model;
 using WebApplication.Models;
-using DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
-using DataAccess.Utils;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Library.Repository;
+using Library.Utils;
 
 namespace WebApplication.Pages.Products
 {

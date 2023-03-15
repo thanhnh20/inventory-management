@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 
 namespace Library.Repository.RepositoryImpl
 {
-    public class SuplierRepositoryIml : ISuplierRepository
+    public class SuplierRepository : GenericRepository<Suplier>, ISuplierRepository
     {
+        public SuplierRepository(InventoryManagementContext context) : base(context)
+        {
+        }
+
         public DbSet<Suplier> GetListSuplier() => SuplierDAO.Instance.GetListSuplier();
     }
 }

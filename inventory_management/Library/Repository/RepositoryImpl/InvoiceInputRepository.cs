@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Repository.RepositoryImpl
 {
-    public class InvoiceInputRepositoryIml : IInvoiceInputRepository
+    public class InvoiceInputRepository : IInvoiceInputRepository
     {
         public bool CreateInvoiceInput(InvoiceInput invoiceInput, Consignment consignment, List<Product> listProduct) => InvoiceInputDAO.Instance.CreateInvoiceInput(invoiceInput, consignment, listProduct);
     }

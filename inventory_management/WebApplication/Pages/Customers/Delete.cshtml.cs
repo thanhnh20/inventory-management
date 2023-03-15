@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Library.Model;
-using DataAccess.Repository;
 using AutoMapper;
 using WebApplication.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Library.Repository;
 
 namespace WebApplication.Pages.Customers
 {

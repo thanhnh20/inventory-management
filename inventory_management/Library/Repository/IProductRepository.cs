@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Library.Repository
 {
-    public interface IProductRepository
+    public interface IProductRepository : IGenericRepository<Product>
     {
         public Product GetProductById(int id);
 
         public List<Product> GetProducts();
+
+        IEnumerable<Product> GetAll();
+        void Add(Product product);
     }
 }
