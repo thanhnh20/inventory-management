@@ -36,6 +36,10 @@ namespace WebApplication
             services.AddTransient<InventoryManagementContext>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<ISuplierRepository, SuplierRepository>();
+            services.AddTransient<IConsignmentRepository, ConsignmentRepository>();
+            services.AddTransient<IConsignmentDetailRepository, ConsignmentDetailRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddAutoMapper(typeof(Program));
         }
 

@@ -9,6 +9,8 @@ using Library.Model;
 using DataAccess.Repository;
 using WebApplication.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace WebApplication.Pages.Suppliers
 {
@@ -25,6 +27,16 @@ namespace WebApplication.Pages.Suppliers
 
         public IActionResult OnGet()
         {
+            var accountJson = HttpContext.Session.GetString("ADMIN");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
+            var account = JsonConvert.DeserializeObject<User>(accountJson);
+            if (account == null)
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
             return Page();
         }
 
@@ -34,16 +46,26 @@ namespace WebApplication.Pages.Suppliers
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+            var accountJson = HttpContext.Session.GetString("ADMIN");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
+            var account = JsonConvert.DeserializeObject<User>(accountJson);
+            if (account == null)
+            {
+                return RedirectToPage("../AdminPages/MainPage");
+            }
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
             var supplier = _mapper.Map<Suplier>(Suplier);
-            if(supplier != null)
+            if (supplier != null)
             {
                 bool result = await _supplierRepository.Add(supplier);
-                if(result)
+                if (result)
                 {
                     return RedirectToPage("./Index");
                 }

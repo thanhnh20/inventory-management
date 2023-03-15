@@ -9,6 +9,8 @@ using Library.Model;
 using DataAccess.Repository;
 using WebApplication.Models;
 using AutoMapper;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplication.Pages.Customers
 {
@@ -25,9 +27,20 @@ namespace WebApplication.Pages.Customers
 
         public IList<CustomerViewModel> Customer { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var accountJson = HttpContext.Session.GetString("STAFF");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                return RedirectToPage("../StaffPages/MainPage");
+            }
+            var account = JsonConvert.DeserializeObject<User>(accountJson);
+            if (account == null)
+            {
+                return RedirectToPage("../StaffPages/MainPage");
+            }
             Customer = _mapper.Map<List<CustomerViewModel>>(await _customerRepository.GetMany());
+            return Page();
         }
     }
 }
