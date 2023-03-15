@@ -85,6 +85,7 @@ namespace WebApplication.Pages.Products
                         }
                         Product.Add(new ProductStatisticViewModel()
                         {
+                            ProductName = product.ProductName,
                             CategoryName = category.CategoryName,
                             ConsignmentName = consignment.ConsignmentName,
                             Description = product.Description,
@@ -156,6 +157,7 @@ namespace WebApplication.Pages.Products
                     }
                     Product.Add(new ProductStatisticViewModel()
                     {
+                        ProductName = product.ProductName,
                         CategoryName = category.CategoryName,
                         ConsignmentName = consignment.ConsignmentName,
                         Description = product.Description,

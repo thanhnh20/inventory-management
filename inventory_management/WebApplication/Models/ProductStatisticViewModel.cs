@@ -4,6 +4,8 @@ namespace WebApplication.Models
 {
     public class ProductStatisticViewModel
     {
+        [Display(Name = "Product Name")]
+        public string ProductName { get; set; }
         [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
         [Display(Name = "Description")]
