@@ -2,20 +2,33 @@
 @model WebApplication.Pages.Products.StatisticModel
 
 @{
-    ViewData["Title"] = "Statistic";
-    Layout = "_StaffLayout";
+    ViewData["Title"] = "Products Statistic";
+    Layout = "_AdminLayout";
 }
 
-<h1>Statistic</h1>
+<h1>Products Statistic</h1>
 
-<p>
-    <a asp-page="Create">Create New Product</a>
-</p>
+<form method="post">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Consignments</label>
+        <div class="col-sm-10">
+            <select name="consignmentId" class="form-control" asp-items="@Model.Consignments">
+                <option value="-1">All Consignments</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].ProductName)
+                @Html.DisplayNameFor(model => model.Product[0].CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ConsignmentName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].Description)
@@ -24,32 +37,24 @@
                 @Html.DisplayNameFor(model => model.Product[0].Image)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].Unit)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Product[0].ImportPrice)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].SellingPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].TotalQuantity)
+                @Html.DisplayNameFor(model => model.Product[0].Quantity)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Category)
-            </th>
-            <th>Action</th>
-            <th>Add to invoice</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Product) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsignmentName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -58,29 +63,15 @@
                 @Html.DisplayFor(modelItem => item.Image)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Unit)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ImportPrice)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SellingPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalQuantity)
+                @Html.DisplayFor(modelItem => item.Quantity) 
+                 @item.Unit
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-            
         </tr>
 }
     </tbody>
