@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Repository
 {
-    public interface ISuplierRepository
+    public interface ISuplierRepository : IGenericRepository<Suplier>
     {
         public DbSet<Suplier> GetListSuplier();
     }

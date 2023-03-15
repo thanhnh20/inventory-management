@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Repository
 {
-    public interface CategoryRepo
+    public interface ICustomerRepository : IGenericRepository<Customer>
     {
-        IEnumerable<Category> GetAll();
     }
 }

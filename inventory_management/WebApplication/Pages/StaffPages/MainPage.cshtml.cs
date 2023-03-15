@@ -17,13 +17,11 @@ namespace WebApplication.Pages.StaffPages
 
         private readonly ILogger _logger;
         public string Error { get; set; }
-        private readonly InventoryManagementContext _context;
-        public ProductRepo productRepo;
+        public IProductRepository productRepo;
         private static readonly string _urlHomePage = "~/HomePages/Home";
-        public MainPageModel(ILogger<MainPageModel> logger)
+        public MainPageModel(ILogger<MainPageModel> logger, IProductRepository productRepo)
         {
-            productRepo = new ProductRepoI();
-            _context = new InventoryManagementContext();
+            this.productRepo = productRepo;
             _logger = logger;
         }
 

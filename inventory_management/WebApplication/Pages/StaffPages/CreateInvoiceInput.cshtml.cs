@@ -40,11 +40,11 @@ namespace WebApplication.Pages.StaffPages
         ISuplierRepository suplierRepository;
 
         IInvoiceInputRepository invoiceInputRepository;
-        public CreateInvoiceInputModel(ILogger<CreateInvoiceInputModel> logger)
+        public CreateInvoiceInputModel(ILogger<CreateInvoiceInputModel> logger, ISuplierRepository suplierRepository, IProductRepository productRepository)
         {
-            invoiceInputRepository = new InvoiceInputRepositoryIml();
-            suplierRepository = new SuplierRepositoryIml();
-            productRepository = new ProductRepositoryIml();
+            invoiceInputRepository = new InvoiceInputRepository();
+            this.productRepository = productRepository;
+            this.suplierRepository = suplierRepository;
             _logger = logger;
         }
 

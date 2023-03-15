@@ -1,6 +1,6 @@
-using DataAccess.Repository;
-using DataAccess.Repository.RepositoryImpl;
 using Library.Model;
+using Library.Repository;
+using Library.Repository.RepositoryImpl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

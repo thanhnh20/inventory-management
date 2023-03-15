@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Repository
+namespace Library.Utils
 {
-    internal class ConsigmentRepo
+    public enum StatusType
     {
+        None = -1,
+        IsDeleted = 1,
+        Normal = 0
     }
 }

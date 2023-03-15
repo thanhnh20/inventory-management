@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace Library.Repository.RepositoryImpl
 {
-    public class CategoryRepoI : CategoryRepo
+    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
         public CategoryDAO categoryDAO;
-        public CategoryRepoI()
+
+        public CategoryRepository(InventoryManagementContext context) : base(context)
         {
             categoryDAO = new CategoryDAO();
         }
+
         public IEnumerable<Category> GetAll()
         {
             return categoryDAO.GetAll();

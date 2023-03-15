@@ -20,20 +20,18 @@ namespace WebApplication.Pages.StaffPages
 {
     public class CreateModel : PageModel
     {
-        private readonly CategoryRepo categoryRepo;
+        private readonly ICategoryRepository categoryRepo;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly ILogger _logger;
         public List<Category> categories { get; set; }
         public string Error { get; set; }
-        private readonly Library.Model.InventoryManagementContext _context;
-        private ProductRepo _productRepo;
-        public CreateModel(ILogger<MainPageModel> logger, IWebHostEnvironment webHost)
+        private IProductRepository _productRepo;
+        public CreateModel(ILogger<MainPageModel> logger, IWebHostEnvironment webHost, ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
             webHostEnvironment = webHost;
-            _context = new InventoryManagementContext();
-            _productRepo = new ProductRepoI();
+            _productRepo = productRepository;
             _logger = logger;
-            categoryRepo = new CategoryRepoI();
+            this.categoryRepo = categoryRepository;
             var listCategory = categoryRepo.GetAll();
             categories = listCategory.ToList();
         }

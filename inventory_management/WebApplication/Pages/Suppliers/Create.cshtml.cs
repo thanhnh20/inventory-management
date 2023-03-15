@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Library.Model;
-using DataAccess.Repository;
 using WebApplication.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Library.Repository;
 
 namespace WebApplication.Pages.Suppliers
 {
@@ -27,15 +27,15 @@ namespace WebApplication.Pages.Suppliers
 
         public IActionResult OnGet()
         {
-            var accountJson = HttpContext.Session.GetString("ADMIN");
+            var accountJson = HttpContext.Session.GetString("STAFF");
             if (string.IsNullOrEmpty(accountJson))
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             var account = JsonConvert.DeserializeObject<User>(accountJson);
             if (account == null)
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             return Page();
         }
@@ -46,15 +46,15 @@ namespace WebApplication.Pages.Suppliers
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            var accountJson = HttpContext.Session.GetString("ADMIN");
+            var accountJson = HttpContext.Session.GetString("STAFF");
             if (string.IsNullOrEmpty(accountJson))
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             var account = JsonConvert.DeserializeObject<User>(accountJson);
             if (account == null)
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             if (!ModelState.IsValid)
             {
