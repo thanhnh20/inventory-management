@@ -16,13 +16,16 @@ namespace WebApplication.Pages.AdminPages
     {
         private IUserRepository userRepository;
 
+        public EditModel(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
         [BindProperty]
         public User User { get; set; }
 
         public IActionResult OnGet(int id)
         {
-
-            userRepository = new UserRepository();
 
             if (id == null)
             {
@@ -43,7 +46,6 @@ namespace WebApplication.Pages.AdminPages
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public IActionResult OnPost()
         {
-            userRepository = new UserRepository();
 
             if (!ModelState.IsValid)
             {

@@ -21,6 +21,11 @@ namespace WebApplication.Pages.AdminPages
 
         public User CurUser { get; set; }
 
+        public MainPageModel(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
         public IActionResult OnGet(string searchString)
         {
             
@@ -33,7 +38,6 @@ namespace WebApplication.Pages.AdminPages
                    return RedirectToPage("/Login");
                 }
             }
-            userRepository = new UserRepository();
             if (searchString != null)
             {
                 SearchString= searchString;

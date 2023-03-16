@@ -19,9 +19,9 @@ namespace WebApplication.Pages.AdminPages
         private IUserRepository userRepository;
         private readonly ILogger _logger;
         public string Error { get; set; }
-        public DeleteModel(ILogger<MainPageModel> logger)
+        public DeleteModel(ILogger<MainPageModel> logger, IUserRepository userRepository)
         {
-            userRepository = new UserRepository();
+            this.userRepository = userRepository;
             _logger = logger;
         }
         [BindProperty]
@@ -57,8 +57,6 @@ namespace WebApplication.Pages.AdminPages
 
         public IActionResult OnPost(int? id)
         {
-
-            userRepository = new UserRepository();
 
             if (id == null)
             {
