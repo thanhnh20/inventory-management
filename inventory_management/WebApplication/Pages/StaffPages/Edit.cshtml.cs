@@ -7,71 +7,99 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library.Model;
+using Library.Repository;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Text;
+using Library.Repository.RepositoryImpl;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace WebApplication.Pages.StaffPages
 {
     public class EditModel : PageModel
     {
         private readonly Library.Model.InventoryManagementContext _context;
-
-        public EditModel() { 
+        private readonly ICategoryRepository categoryRepository;
+        private readonly IProductRepository productRepository;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ILogger _logger;
+        public string Error { get; set; }
+        public EditModel(IMapper mapper, ICategoryRepository categoryRepository, IProductRepository productRepository
+            , ILogger<MainPageModel> logger, IWebHostEnvironment webHost) {
+            this.categoryRepository = categoryRepository;
+            _mapper = mapper;
             _context = new InventoryManagementContext();
+            this.productRepository = productRepository;
+            var listCategory = categoryRepository.GetAll();
+            categories = listCategory.ToList();
+            webHostEnvironment = webHost;
+            _mapper= mapper;
         }
 
         [BindProperty]
         public Product Product { get; set; }
+        public List<Category> categories { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            Product = await _context.Products
-                .Include(p => p.Category).FirstOrDefaultAsync(m => m.ProductId == id);
-
-            if (Product == null)
+            try
             {
-                return NotFound();
+                var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
+                Product = productRepository.GetProductById(id);
+                return Page();
+                
             }
-           ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.Message + " at MainPageModel");
+                Error = ex.Message;
+
+            }
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public  IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            _context.Attach(Product).State = EntityState.Modified;
-
-            try
+            if (Product != null)
             {
-                await _context.SaveChangesAsync();
+                string uniqueFileName = UploadedFile();
+                Product.Image = uniqueFileName;
+                productRepository.UpdateProduct(Product);
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(Product.ProductId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool ProductExists(int id)
+            return RedirectToPage("./MainPage");
+         }
+        private string UploadedFile()
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+            string uniqueFileName = null;
+            if (Product.FrontImage != null)
+            {
+                uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Product.FrontImage.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Product.FrontImage.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
+      
     }
 }

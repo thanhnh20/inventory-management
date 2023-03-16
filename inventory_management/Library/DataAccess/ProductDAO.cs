@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 
 namespace Library.DataAccess
@@ -46,6 +47,72 @@ namespace Library.DataAccess
         public Product GetProductByID(int productID) => db.Products.Where(m => m.ProductId == productID).FirstOrDefault();
 
         public List<Product> GetProduct() => db.Products.ToList();
+        public void UpdateProduct(Product product)
+        {
+            var flag = GetProductByID(product.ProductId);
+            if (product.Image !=null) {
+               
+                if (flag != null)
+                {
 
+                    flag.ProductName = product.ProductName;
+                    flag.Description = product.Description;
+                    flag.CategoryId = product.CategoryId;
+
+                    flag.Image = product.Image;
+                    flag.Unit = product.Unit;
+                    flag.ImportPrice = product.ImportPrice;
+                    flag.SellingPrice = product.SellingPrice;
+                    flag.TotalQuantity = product.TotalQuantity;
+                    flag.Status = product.Status;
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+
+                if (flag != null)
+                {
+
+                    flag.ProductName = product.ProductName;
+                    flag.Description = product.Description;
+                    flag.CategoryId = product.CategoryId;
+
+                    
+                    flag.Unit = product.Unit;
+                    flag.ImportPrice = product.ImportPrice;
+                    flag.SellingPrice = product.SellingPrice;
+                    flag.TotalQuantity = product.TotalQuantity;
+                    flag.Status = product.Status;
+                    db.SaveChanges();
+                }
+            }
+        }
+        public void DeleteProductByID(int productId)
+        {
+            
+                Product check = GetProductByID(productId);
+                if (check != null)
+                {
+                    using (var db = new InventoryManagementContext())
+                    {
+                        check = db.Products.Where(m => m.ProductId == productId).First();
+                        check.Status = 0;
+                        db.SaveChanges();
+                        Console.WriteLine("Save successfully");
+                    }
+                }
+                else
+                {
+                    throw new Exception("User exists already!");
+                }
+
+
+         }
+        public IEnumerable<Product> GetAllAndDescending(string name)
+        {
+            return db.Products.Where(p => p.ProductName == name).OrderByDescending(p => p.Status).ToList();
+        }
     }
 }
+

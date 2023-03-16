@@ -17,11 +17,18 @@ namespace Library.Repository.RepositoryImpl
 
         public void Add(Product product) => ProductDAO.Instance.Add(product);
 
+        public void DeleteProductByID(int productId)
+        {
+            ProductDAO.Instance.DeleteProductByID(productId);
+        }
 
         public IEnumerable<Product> GetAll() => ProductDAO.Instance.GetAll();
 
+        public IEnumerable<Product> GetAllAndDescending(string name) => ProductDAO.Instance.GetAllAndDescending(name);
+
         public Product GetProductById(int id) => ProductDAO.Instance.GetProductByID(id);
         public List<Product> GetProducts() => ProductDAO.Instance.GetProduct();
+        public void UpdateProduct(Product product) => ProductDAO.Instance.UpdateProduct(product);
 
     }
 }
