@@ -20,6 +20,12 @@
         <p>
             <a asp-page="Create">Create New</a>
         </p>
+        <form method="post" class="form-inline">
+            <div class="form-group">
+                <input type="text" class="form-control" asp-for=@Model.searchString placeholder="Search...">
+            </div>
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
         <table class="table">
             <thead>
                 <tr>

@@ -25,6 +25,8 @@ namespace WebApplication.Pages.StaffPages
             _logger = logger;
         }
 
+        [BindProperty(SupportsGet = true)]
+        public string? searchString { get; set; }
         public IList<Product> Product { get; set; }
 
         public IActionResult OnGet()
@@ -42,6 +44,21 @@ namespace WebApplication.Pages.StaffPages
 
             }
             return Page();
+        }
+        public void OnPost()
+        {
+            if(searchString != null)
+            {
+                var list = productRepo.GetAllAndDescending(searchString);
+                Product = list.ToList();
+
+
+            }
+            else
+            {
+                var list = productRepo.GetAll();
+                Product = list.ToList();
+            }
         }
         public IActionResult OnGetLogOut()
         {

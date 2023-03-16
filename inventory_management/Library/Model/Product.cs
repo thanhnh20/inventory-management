@@ -29,7 +29,6 @@ namespace Library.Model
         public virtual Category Category { get; set; }
         public virtual ICollection<ConsignmentDetail> ConsignmentDetails { get; set; }
         
-        [Required(ErrorMessage = "Please choose Front image")]
         [Display(Name = "Front Image")]
         [NotMapped]
         public IFormFile FrontImage { get; set; }
