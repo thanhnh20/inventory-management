@@ -10,7 +10,6 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
-
 namespace Library.DataAccess
 {
     public class ProductDAO
@@ -62,7 +61,7 @@ namespace Library.DataAccess
         }
         public void UpdateProduct(Product product)
         {
-            var flag = GetProductByID(product.ProductId);
+            Product flag = GetProductByID(product.ProductId);
             if (product.Image !=null) {
                
                 if (flag != null)
@@ -99,15 +98,15 @@ namespace Library.DataAccess
                 }
             }
         }
-        public void DeleteProductByID(int productId)
+        public void DeleteProductByID(Product product)
         {
             
-                Product check = GetProductByID(productId);
+                Product check = GetProductByID(product.ProductId);
                 if (check != null)
                 {
                     using (var db = new InventoryManagementContext())
                     {
-                        check = db.Products.Where(m => m.ProductId == productId).First();
+                        check = db.Products.Where(m => m.ProductId == product.ProductId).First();
                         check.Status = 0;
                         db.SaveChanges();
                         Console.WriteLine("Save successfully");

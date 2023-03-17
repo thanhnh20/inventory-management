@@ -38,6 +38,7 @@ namespace WebApplication.Pages.StaffPages
             categories = listCategory.ToList();
             webHostEnvironment = webHost;
             _mapper= mapper;
+            _logger = logger;
         }
 
         [BindProperty]
