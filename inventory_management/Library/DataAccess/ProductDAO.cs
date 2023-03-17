@@ -62,42 +62,46 @@ namespace Library.DataAccess
         }
         public void UpdateProduct(Product product)
         {
-            var flag = GetProductByID(product.ProductId);
-            if (product.Image !=null) {
-               
-                if (flag != null)
-                {
-                    flag.ProductName = product.ProductName;
-                    flag.Description = product.Description;
-                    flag.CategoryId = product.CategoryId;
-                    flag.Image = product.Image;
-                    flag.Unit = product.Unit;
-                    flag.ImportPrice = product.ImportPrice;
-                    flag.SellingPrice = product.SellingPrice;
-                    flag.TotalQuantity = product.TotalQuantity;
-                    flag.Status = product.Status;
-                    db.SaveChanges();
-                }
-            }
-            else
+            using(var dbContext = new InventoryManagementContext())
             {
-
-                if (flag != null)
+                var flag = dbContext.Products.Where(p => p.ProductId == product.ProductId).FirstOrDefault();
+                if (product.Image != null)
                 {
 
-                    flag.ProductName = product.ProductName;
-                    flag.Description = product.Description;
-                    flag.CategoryId = product.CategoryId;
-
-                    
-                    flag.Unit = product.Unit;
-                    flag.ImportPrice = product.ImportPrice;
-                    flag.SellingPrice = product.SellingPrice;
-                    flag.TotalQuantity = product.TotalQuantity;
-                    flag.Status = product.Status;
-                    db.SaveChanges();
+                    if (flag != null)
+                    {
+                        flag.ProductName = product.ProductName;
+                        flag.Description = product.Description;
+                        flag.CategoryId = product.CategoryId;
+                        flag.Image = product.Image;
+                        flag.Unit = product.Unit;
+                        flag.ImportPrice = product.ImportPrice;
+                        flag.SellingPrice = product.SellingPrice;
+                        flag.TotalQuantity = product.TotalQuantity;
+                        flag.Status = product.Status;
+                        dbContext.SaveChanges();
+                    }
                 }
-            }
+                else
+                {
+
+                    if (flag != null)
+                    {
+
+                        flag.ProductName = product.ProductName;
+                        flag.Description = product.Description;
+                        flag.CategoryId = product.CategoryId;
+
+
+                        flag.Unit = product.Unit;
+                        flag.ImportPrice = product.ImportPrice;
+                        flag.SellingPrice = product.SellingPrice;
+                        flag.TotalQuantity = product.TotalQuantity;
+                        flag.Status = product.Status;
+                        dbContext.SaveChanges();
+                    }
+                }
+            }           
         }
         public void DeleteProductByID(int productId)
         {
