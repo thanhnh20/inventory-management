@@ -17,5 +17,9 @@ namespace Library.Repository
         void DeleteUser(User user);
         IEnumerable<User> SearchByNameAndId(string searchValue);
         void UpdateStatusUser(User userD);
+
+        public List<User> getUserPage(int pageSize, int pageIndex);
+
+        public int getTotalUserPage();
     }
 }

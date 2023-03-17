@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -14,14 +15,20 @@ namespace Library.Model
         }
 
         public int UserId { get; set; }
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string FullName { get; set; }
+        [Required]
         public string Password { get; set; }
         public int RoleId { get; set; }
         public int? Gender { get; set; }
         public DateTime? BirthDay { get; set; }
+   
         public string PhoneNumber { get; set; }
+        
         public string Address { get; set; }
+       
         public int Status { get; set; }
 
         public virtual Role Role { get; set; }

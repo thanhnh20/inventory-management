@@ -35,17 +35,6 @@ namespace Library.DataAccess
 
         public IEnumerable<User> GetUserList()
         {
-            /*List<User> users;
-            try
-            {
-                users = db.Users.ToList();
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            return users;*/
-
             var list = new List<User>();
             using(var db = new InventoryManagementContext()) 
             {
@@ -117,7 +106,7 @@ namespace Library.DataAccess
             {
                 using (var db = new InventoryManagementContext())
                 {
-                    check = db.Users.Where(m => m.UserId == user.UserId).First();
+                    check = db.Users.Where(m => m.UserId == user.UserId).FirstOrDefault();
                     db.Users.Add(new User
                     {
                         Username = user.Username,
@@ -130,7 +119,6 @@ namespace Library.DataAccess
                         Address = user.Address,
                         Status = user.Status,
                     });
-
                     db.SaveChanges();
                     Console.WriteLine("Save successfully");
                 }
@@ -172,6 +160,16 @@ namespace Library.DataAccess
         {
             var task = db.Users.Where(c => c.FullName.Contains(searchValue) || c.Username.Contains(searchValue)).ToList();
             return task;
+        }
+
+        public int getTotalUserPage()
+        {
+            return db.Users.Count();
+        }
+
+        public List<User> getUserPage(int pageSize, int pageIndex)
+        {
+            return db.Users.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
         }
     }
 }

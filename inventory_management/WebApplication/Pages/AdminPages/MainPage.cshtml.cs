@@ -21,14 +21,19 @@ namespace WebApplication.Pages.AdminPages
 
         public User CurUser { get; set; }
 
+        public int totalUser { get; set; }
+
+        public int pageNo { get; set; }
+
+        public int pageSize { get; set; }   
+
         public MainPageModel(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
 
-        public IActionResult OnGet(string searchString)
+        public IActionResult OnGet(string searchString, int p = 1, int s =3)
         {
-            
             CurUser = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("ADMIN"));
             if(CurUser == null)
             {
@@ -44,7 +49,7 @@ namespace WebApplication.Pages.AdminPages
                 var task = userRepository.SearchByNameAndId(searchString);
                 if (task == null) 
                 {
-                    User = userRepository.GetUserList().ToList();
+                    User = userRepository.GetUserList().ToList();                
                 }
                 else
                 {
@@ -54,7 +59,13 @@ namespace WebApplication.Pages.AdminPages
             else
             {
                 User = (IList<User>) userRepository.GetUserList();
+                User = userRepository.getUserPage(p, s);
+                pageSize = s;
+                totalUser = userRepository.getTotalUserPage();
+                pageNo = p;
+
             }
+           
             return Page();
         }
 
