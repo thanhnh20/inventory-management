@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace Library.Repository.RepositoryImpl
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
+        public UserRepository(InventoryManagementContext context) : base(context)
+        {
+        }
+
         public User checkLogin(string username, string password) => UserDAO.Instance.checkLogin(username, password);
 
         public void DeleteUser(User user) => UserDAO.Instance.DeleteUser(user);

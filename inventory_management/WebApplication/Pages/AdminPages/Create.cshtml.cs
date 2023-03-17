@@ -15,7 +15,10 @@ namespace WebApplication.Pages.AdminPages
     {
         private IUserRepository userRepository;
 
-       
+        public CreateModel(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
 
         public IActionResult OnGet()
         {
@@ -33,7 +36,6 @@ namespace WebApplication.Pages.AdminPages
                 return Page();
             }
 
-            userRepository = new UserRepository();
 
             if (User.UserId == null)
             {

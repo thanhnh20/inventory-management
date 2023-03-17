@@ -15,9 +15,9 @@ namespace WebApplication.Pages.HomePages
     public class HomeModel : PageModel
     {
         private IUserRepository userRepository;
-        public HomeModel()
+        public HomeModel(IUserRepository userRepository)
         {
-            userRepository = new UserRepository();
+            this.userRepository = userRepository;
         }
 
         [BindProperty]

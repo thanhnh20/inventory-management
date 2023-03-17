@@ -40,6 +40,9 @@ namespace WebApplication
             services.AddTransient<IConsignmentDetailRepository, ConsignmentDetailRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IInvoiceOutputRepository, InvoiceOutputRepository>();
+            services.AddTransient<IInvoiceOutputDetailRepository, InvoiceOutputDetailRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(Program));
         }
 
