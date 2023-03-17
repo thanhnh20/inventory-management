@@ -50,56 +50,87 @@ namespace WebApplication.Pages.StaffPages
 
         public IActionResult OnGet(int ProductId)
         {
-
-            //var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-
-            try
+            var accountJson = HttpContext.Session.GetString("STAFF");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                Error = "accountJson is null";
+                return Redirect("~/HomePages/Home");
+            }
+            else
+            {
+                var AccountSession = JsonConvert.DeserializeObject<User>(accountJson);
+                if(accountJson == null)
+                {
+                    Error = "accountSession is null";
+                    return Redirect("~/HomePages/Home");
+                }
+                else
+                {
+                    try
                     {
-                        var AccountSessioan = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
                         var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
                         Products = ListInvoiceInput.ToList();
-                        
                         ViewData["SuplierName"] = new SelectList(suplierRepository.GetListSuplier(), "SuplierId", "SuplierName");
-            }
+                    }
                     catch (Exception ex)
                     {
                         Msg = "List Invoice input is null";
                     }
-                 
-                return Page();
+                }
+            }               
+            return Page();
         }
 
         public IActionResult OnGetRemoveProductInWaitInvoice(int ProductId)
         {
-            var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-            if (AccountSession != null)
+            var accountJson = HttpContext.Session.GetString("STAFF");
+            if (string.IsNullOrEmpty(accountJson))
             {
-                try
-                {
-                    var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
-                    var product = ListInvoiceInput.Where(m => m.ProductId == ProductId).FirstOrDefault();
-                    ListInvoiceInput.Remove(product);
-                    HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
-                    Products = ListInvoiceInput.ToList();
-
-                    ViewData["SuplierName"] = new SelectList(suplierRepository.GetListSuplier(), "SuplierId", "SuplierName");
-                }
-                catch (Exception ex)
-                {
-                    Msg = "List Invoice input is null";
-                }
+                Error = "Account Json is null";
             }
             else
             {
-                Error = "Login before do anything";
+                var AccountSession = JsonConvert.DeserializeObject<User>(accountJson);
+                if(accountJson == null)
+                {
+                    Error = "Account Session is null";
+                }
+                else
+                {
+                    try
+                    {
+                        var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
+                        var product = ListInvoiceInput.Where(m => m.ProductId == ProductId).FirstOrDefault();
+                        ListInvoiceInput.Remove(product);
+                        HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
+                        Products = ListInvoiceInput.ToList();
+
+                        ViewData["SuplierName"] = new SelectList(suplierRepository.GetListSuplier(), "SuplierId", "SuplierName");
+                    }
+                    catch (Exception ex)
+                    {
+                        Msg = "List Invoice input is null";
+                    }
+                }
             }
             return Page();
         }
 
         public IActionResult OnGetAddInvoiceInput(int ProductId)
         {
-                var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-                if(AccountSession != null)
+            var accountJson = HttpContext.Session.GetString("STAFF");
+            if (string.IsNullOrEmpty(accountJson))
+            {
+                Error = "Account Json is null";
+            }
+            else
+            {
+                var accountSession = JsonConvert.DeserializeObject<User>(accountJson);
+                if(accountSession == null)
+                {
+                    Error = "Account Session is null";
+                }
+                else
                 {
                     try
                     {
@@ -107,99 +138,136 @@ namespace WebApplication.Pages.StaffPages
                         if (ListInvoiceInput != null)
                         {
                             var product = productRepository.GetProductById(ProductId);
+                            var productAdd = new Product()
+                            {
+                                ProductId = product.ProductId,
+                                ProductName = product.ProductName,
+                                Category = product.Category,
+                                CategoryId = product.CategoryId,
+                                Status = product.Status,
+                                TotalQuantity = product.TotalQuantity,
+                                FrontImage = product.FrontImage,
+                                Image = product.Image,
+                                ImportPrice = product.ImportPrice,
+                            };
                             product.Category.Products = null;
                             var productCheck = ListInvoiceInput.Where(x => x.ProductId == ProductId).FirstOrDefault();
                             if (productCheck != null)
                             {
                                 ++ListInvoiceInput.Where(x => x.ProductId == ProductId).FirstOrDefault().TotalQuantity;
                             }
-                            else 
-                            { 
-                                product.TotalQuantity = 1;
-                                ListInvoiceInput.Add(product);                             
-                            }            
-                            
+                            else
+                            {
+                                productAdd.TotalQuantity = 1;
+                                ListInvoiceInput.Add(productAdd);
+                            }
+
                         }
                         HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
-                    }catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         var ListInvoiceInput = new List<Product>();
                         var product = productRepository.GetProductById(ProductId);
+                        var productAdd = new Product()
+                        {
+                            ProductId = product.ProductId,
+                            ProductName = product.ProductName,
+                            Category = product.Category,
+                            CategoryId = product.CategoryId,
+                            Status = product.Status,
+                            TotalQuantity = product.TotalQuantity,
+                            FrontImage = product.FrontImage,
+                            Image = product.Image,
+                            ImportPrice = product.ImportPrice,
+                        };
                         product.Category.Products = null;
-                        product.TotalQuantity = 1;
-                        ListInvoiceInput.Add(product);
+                        productAdd.TotalQuantity = 1;
+                        ListInvoiceInput.Add(productAdd);
                         HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
                     }
                 }
-                else
-                {
-                    Error = "Session is null";
-                }
-                return RedirectToPage("MainPage");               
-            
+            }   
+            return RedirectToPage("MainPage");               
         }
               
         public IActionResult OnPost()
         {
-            var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-            if(AccountSession != null)
+            var accountJson = HttpContext.Session.GetString("STAFF");
+            if (string.IsNullOrEmpty(accountJson))
             {
-                try
-                {
-                    var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
-                    if(ListInvoiceInput.Count > 0)
-                    {
-                        double? amount = 0;
-                        foreach (var product in ListInvoiceInput)
-                        {
-                            amount = amount + (product.TotalQuantity * product.ImportPrice);
-                        }
-                        //setup for incoive input
-                        InvoiceInput.UserId = AccountSession.UserId;
-                        InvoiceInput.Amount = amount;
-
-                        //setup for incoive input detail
-                        var check = invoiceInputRepository.CreateInvoiceInput(InvoiceInput, Consignment, ListInvoiceInput);
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
+                Error = "Account Json is null";
             }
             else
             {
-                Error = "Session is null";
-            }
+                var AccountSession = JsonConvert.DeserializeObject<User>(accountJson);
+                if(AccountSession == null)
+                {
+                    Error = "Account Session is null";
+                }
+                else
+                {
+                    try
+                    {
+                        var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
+                        if (ListInvoiceInput.Count > 0)
+                        {
+                            double? amount = 0;
+                            foreach (var product in ListInvoiceInput)
+                            {
+                                amount = amount + (product.TotalQuantity * product.ImportPrice);
+                            }
+                            //setup for incoive input
+                            InvoiceInput.UserId = AccountSession.UserId;
+                            InvoiceInput.Amount = amount;
+
+                            //setup for incoive input detail
+                            var check = invoiceInputRepository.CreateInvoiceInput(InvoiceInput, Consignment, ListInvoiceInput);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Msg = "List Invoice input is null";
+                    }
+                }
+            }      
             return RedirectToPage("MainPage");
         }
 
         public IActionResult OnPostChangeQuantity()
         {
-            var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-            if (AccountSession != null)
+            var accountJson = HttpContext.Session.GetString("STAFF");
+            if (string.IsNullOrEmpty(accountJson))
             {
-                try
-                {
-                    var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
-                    var productCheck = ListInvoiceInput.Where(x => x.ProductId == Product.ProductId).FirstOrDefault();
-                    if (productCheck != null)
-                    {
-                        productCheck.TotalQuantity = Product.TotalQuantity;
-                    }
-                    InvoiceInput.InputDate = DateTime.Now;
-                    HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
-                    Products = ListInvoiceInput.ToList();
-                    ViewData["SuplierName"] = new SelectList(suplierRepository.GetListSuplier(), "SuplierId", "SuplierName");
-                }
-                catch (Exception ex)
-                {
-                    Msg = "List Invoice input is null";
-                }
+                Error = "Account Json is null";
             }
             else
             {
-                Error = "Login before do anything";
+                var AccountSession = JsonConvert.DeserializeObject<User>(accountJson);
+                if(AccountSession == null)
+                {
+                    Error = "Account Session is null";
+                }
+                else
+                {
+                    try
+                    {
+                        var ListInvoiceInput = JsonConvert.DeserializeObject<List<Product>>(HttpContext.Session.GetString("LIST_INVOICE_INPUT"));
+                        var productCheck = ListInvoiceInput.Where(x => x.ProductId == Product.ProductId).FirstOrDefault();
+                        if (productCheck != null)
+                        {
+                            productCheck.TotalQuantity = Product.TotalQuantity;
+                        }
+                        InvoiceInput.InputDate = DateTime.Now;
+                        HttpContext.Session.SetString("LIST_INVOICE_INPUT", JsonConvert.SerializeObject(ListInvoiceInput));
+                        Products = ListInvoiceInput.ToList();
+                        ViewData["SuplierName"] = new SelectList(suplierRepository.GetListSuplier(), "SuplierId", "SuplierName");
+                    }
+                    catch (Exception ex)
+                    {
+                        Msg = "List Invoice input is null";
+                    }
+                }
             }
             return RedirectToPage();
         }

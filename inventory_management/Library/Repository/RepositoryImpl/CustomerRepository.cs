@@ -1,4 +1,5 @@
-﻿using Library.Model;
+﻿using Library.DataAccess;
+using Library.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace Library.Repository.RepositoryImpl
         public CustomerRepository(InventoryManagementContext context) : base(context)
         {
         }
+
+        public List<Customer> GetAll() => CustomerDAO.Instance.GetALl();
     }
 }

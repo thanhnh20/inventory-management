@@ -32,8 +32,7 @@ namespace WebApplication.Pages.StaffPages
             try
             {
                 var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
-                var products = productRepo.GetAll();
-                Product = products.ToList();
+                Product = productRepo.GetProducts();
             }
             catch (Exception ex)
             {
@@ -47,21 +46,10 @@ namespace WebApplication.Pages.StaffPages
         {
             HttpContext.Session.Remove("STAFF");
             return Redirect(_urlHomePage);
-            /*
-        public IActionResult OnGet()
-        {
-            return RedirectToPage("../Products/Statistic");
         }
-
-        public IActionResult OnGetLogout()
-        {
-            HttpContext.Session.Remove("STAFF");
-            return Redirect("~/HomePages/Home");
-        }
-
         public IActionResult OnGetLogin()
         {
-            return Redirect("~/HomePages/Home");*/
+            return Redirect("~/HomePages/Home");
         }
     }
 }

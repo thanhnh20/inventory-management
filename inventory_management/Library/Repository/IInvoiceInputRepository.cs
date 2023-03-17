@@ -10,5 +10,7 @@ namespace Library.Repository
     public interface IInvoiceInputRepository
     {
         public bool CreateInvoiceInput(InvoiceInput invoiceInput, Consignment consignment, List<Product> listProduct);
+
+        public List<InvoiceInput> ListAll();
     }
 }

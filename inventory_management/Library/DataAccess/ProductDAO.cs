@@ -35,7 +35,11 @@ namespace Library.DataAccess
         }
         public IEnumerable<Product> GetAll()
         {
-            return db.Products.Include(p => p.Category);
+            using (var db = new InventoryManagementContext())
+            {
+                return db.Products.Include(p => p.Category).ToList();
+            }
+            
         }
         public void Add(Product product)
         {
@@ -43,9 +47,21 @@ namespace Library.DataAccess
             db.SaveChanges();
         }
 
-        public Product GetProductByID(int productID) => db.Products.Where(m => m.ProductId == productID).FirstOrDefault();
 
-        public List<Product> GetProduct() => db.Products.ToList();
+        public List<Product> GetProduct() {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.Products.Include(c => c.Category).ToList();
+            }
+        }
+
+        public Product GetProductByID(int productID)
+        {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.Products.Where(p => p.ProductId == productID).Include(c => c.Category).FirstOrDefault();
+            }
+        }
 
     }
 }

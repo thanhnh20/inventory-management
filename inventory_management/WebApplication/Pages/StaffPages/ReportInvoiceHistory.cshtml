@@ -1,0 +1,75 @@
+﻿@page
+@model WebApplication.Pages.StaffPages.ReportInvoiceHistoryModel
+
+@{
+    ViewData["Title"] = "ReportInvoiceHistory";
+    Layout = "~/Pages/Shared/_StaffLayout.cshtml";
+}
+
+<h1>Report Invoice History</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].InputDate)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].Suplier)
+            </th>
+            <th>
+                ConsignmentID
+            </th>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].Amount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.InvoiceInput) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suplier.SuplierName)
+            </td>
+            <th>       
+                @foreach(var i in @item.InvoiceInputDetails){
+                    @i.Consignment.ConsignmentId
+                }                
+            </th>
+            <td>
+                <table>
+                @foreach(var i in @item.InvoiceInputDetails){
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Product Name</th>    
+                                <th width="150px">Import Price</th>
+                                <th>Quantity</th>
+                            </tr>                  
+                        </thead>
+                    <tbody>
+                            @foreach(var a in @i.Consignment.ConsignmentDetails)
+                            {
+                                <tr>
+                                    <td></td>
+                                    <td>@a.Product.ProductName</td>
+                                    <td >@a.Product.ImportPrice</td>
+                                    <td>@a.Quantity</td>
+                                </tr>
+                                
+                            }                       
+                    </tbody>                   
+                 }
+                 </table>
+            </td>
+            <th style="color: red">
+                @Html.DisplayFor(modelItem => item.Amount)
+            </th>
+        </tr>
+}
+    </tbody>
+</table>

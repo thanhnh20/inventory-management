@@ -9,5 +9,9 @@ namespace Library.Repository
 {
     public interface IConsignmentDetailRepository : IGenericRepository<ConsignmentDetail>
     {
+
+        public List<ConsignmentDetail> getConsignmentIDByProductID(int productID);
+
+        public ConsignmentDetail getConsignmentByID(int consID);
     }
 }

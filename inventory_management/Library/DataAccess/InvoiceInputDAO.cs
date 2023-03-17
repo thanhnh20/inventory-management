@@ -1,4 +1,5 @@
 ﻿using Library.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +77,8 @@ namespace Library.DataAccess
                         InvoiceInputDetail invoiceInputDetail = new InvoiceInputDetail()
                         {
                             InputBillId = newInvoiceInput.InputBillId,
-                            ConsignmentId = newConsignment.ConsignmentId
+                            ConsignmentId = newConsignment.ConsignmentId,
+                            Quantity = 1
                         };
                         dbContext.InvoiceInputDetails.Add(invoiceInputDetail);
                         dbContext.SaveChanges();
@@ -91,6 +93,18 @@ namespace Library.DataAccess
                     }
                     return false;
                 }
+            }
+        }
+
+        public List<InvoiceInput> ListAll()
+        {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.InvoiceInputs.Include(i => i.Suplier)
+                                        .Include(i => i.InvoiceInputDetails)
+                                            .ThenInclude(i => i.Consignment).ThenInclude(i => i.ConsignmentDetails).ThenInclude(i => i.Product)
+                                        .OrderByDescending(i => i.InputDate)
+                                        .ToList();
             }
         }
     }

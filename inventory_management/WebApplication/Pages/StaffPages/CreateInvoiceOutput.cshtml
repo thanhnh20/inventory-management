@@ -1,12 +1,13 @@
 ﻿@page
-@model WebApplication.Pages.StaffPages.CreateInvoiceInputModel
-
+@model WebApplication.Pages.StaffPages.CreateInvoiceOutputModel
 @{
-    ViewData["Title"] = "CreateInvoiceInput";
+    ViewData["Title"] = "CreateInvoiceOutput";
     Layout = "~/Pages/Shared/_StaffLayout.cshtml";
     var errorSession = Model.Error;
     var msgError = Model.Msg;
     var listProducts = Model.Products;
+    var msgErrorQuantity = Model.msgErrorQuantity;
+    var msgWarningQuantity = Model.msgWarningQuantity;
 }
 
 @{
@@ -22,7 +23,15 @@
         <h2 class="text-info">Select a product to create an Invoice</h2>
         <a asp-page="MainPage" >Click to select</a>
     }else{
-        <h1>Create Invoice Input</h1>
+            <h1>Create Invoice Output</h1>
+            if(msgErrorQuantity != null)
+            {
+                <h6 style="color: red">@msgErrorQuantity</h6>
+            }
+            if(msgWarningQuantity != null)
+            {
+                <h6 style="color: orange">@msgWarningQuantity</h6>
+            }
             <table class="table">
                 <thead>
                     <tr>
@@ -36,8 +45,12 @@
                             @Html.DisplayNameFor(model => model.Products[0].Category.CategoryName)
                         </th>
                         <th>
+                            Consignment
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.Products[0].TotalQuantity)
                         </th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -54,17 +67,26 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                            </td>                       
+                            @{
+                                var listConsignmentDetail = ViewData[item.ProductId+""] as List<Library.Model.ConsignmentDetail>;
+                                var listConsignmentViewBag = new SelectList(listConsignmentDetail, "ConsignmentDetailId", "ConsignmentId");
+                            }
+                            <td>
+                                <select asp-for="ConsignmentDetail.ConsignmentDetailId" class ="form-control" asp-items="listConsignmentViewBag"
+                                    
+                                ></select>
                             </td>
                             <td>
                                 <input type="number" class="form-control" asp-for="Product.TotalQuantity" value="@item.TotalQuantity"/>
                                 <span asp-validation-for="Product.TotalQuantity" class="text-danger"></span>              
                             </td>    
                             <td>                         
-                                <input type="submit" value="Change Quantity" class="btn btn-info" />
+                                <input type="submit" value="Change" class="btn btn-info" />
                             </td>
                      
                             <td>
-                                <a class="btn btn-danger" asp-page="./CreateInvoiceInput" asp-page-handler="RemoveProductInWaitInvoice" asp-route-ProductId="@item.ProductId">Remove</a>    
+                                <a class="btn btn-danger" asp-page="./CreateInvoiceOutput" asp-page-handler="RemoveProductInWaitInvoice" asp-route-ProductId="@item.ProductId">Remove</a>    
                             </td>
                         </tr>
                     </form>
@@ -72,26 +94,21 @@
                 </tbody>
             </table>
 
-
+            
             <hr />
             <div class="row">
                 <div class="col-md-4">
                     <form method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="InvoiceInput.Suplier.SuplierName" class="control-label"></label>
-                            <select asp-for="InvoiceInput.SuplierId" class ="form-control" asp-items="ViewBag.SuplierName"></select>
+                            <label asp-for="InvoiceOutput.Customer.CustomerName" class="control-label"></label>
+                            <select asp-for="InvoiceOutput.CustomerId" class ="form-control" asp-items="ViewBag.CustomerName"></select>
                         </div>
-                        <a asp-page="../Suppliers/Create" >Create a new Supplier</a>
+                        <a asp-page="../Customers/Create" >Create a new Customer</a>
                         <div class="form-group">
-                            <label asp-for="InvoiceInput.InputDate" class="control-label"></label>
-                            <input asp-for="InvoiceInput.InputDate" class="form-control" />
-                            <span asp-validation-for="InvoiceInput.InputDate" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Consignment.ConsignmentName" class="control-label"></label>
-                            <input asp-for="Consignment.ConsignmentName" class="form-control" />
-                            <span asp-validation-for="Consignment.ConsignmentName" class="text-danger"></span>
+                            <label asp-for="InvoiceOutput.OutputDate" class="control-label"></label>
+                            <input asp-for="InvoiceOutput.OutputDate" class="form-control" />
+                            <span asp-validation-for="InvoiceOutput.OutputDate" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
@@ -99,7 +116,7 @@
                     </form>
                 </div>
             </div>
-
+            
         }               
     }   
 }

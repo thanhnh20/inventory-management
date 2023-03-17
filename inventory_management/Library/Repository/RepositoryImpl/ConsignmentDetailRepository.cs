@@ -1,4 +1,5 @@
-﻿using Library.Model;
+﻿using Library.DataAccess;
+using Library.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,9 @@ namespace Library.Repository.RepositoryImpl
         public ConsignmentDetailRepository(InventoryManagementContext context) : base(context)
         {
         }
+
+        public ConsignmentDetail getConsignmentByID(int consID) => ConsignmentDetailDAO.Instance.getConsignmentByID(consID);
+
+        public List<ConsignmentDetail> getConsignmentIDByProductID(int productID) => ConsignmentDetailDAO.Instance.getConsignmentIDByProductID(productID);
     }
 }
