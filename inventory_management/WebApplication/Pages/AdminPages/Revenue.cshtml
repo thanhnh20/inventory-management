@@ -1,0 +1,56 @@
+﻿@page
+@model WebApplication.Pages.AdminPages.RevenueModel
+
+@{
+    ViewData["Title"] = "Revenue";
+    Layout = "_AdminLayout";
+}
+
+<h1>Revenue</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Revenues[0].CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Revenues[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Revenues[0].OutputDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Revenues[0].Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Revenues[0].TotalPrice)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Revenues)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutputDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.OutputBillId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

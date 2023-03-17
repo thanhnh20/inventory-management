@@ -15,5 +15,8 @@ namespace Library.Repository
 
         IEnumerable<Product> GetAll();
         void Add(Product product);
+        void UpdateProduct(Product product);
+        void DeleteProductByID(int productId);
+        IEnumerable<Product> GetAllAndDescending(string name);
     }
 }

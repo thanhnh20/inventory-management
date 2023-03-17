@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Repository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<User>
     {
         public User checkLogin(string username, string password);
         IEnumerable<User> GetUserList();

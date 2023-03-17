@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Library.Model;
+using AutoMapper;
+using Library.Repository;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace WebApplication.Pages.StaffPages
 {
@@ -13,23 +17,34 @@ namespace WebApplication.Pages.StaffPages
     {
         private readonly Library.Model.InventoryManagementContext _context;
 
-        public DeleteModel(Library.Model.InventoryManagementContext context)
+        private readonly ICategoryRepository categoryRepository;
+        private readonly IProductRepository productRepository;
+        private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ILogger _logger;
+        public string Error { get; set; }
+        public DeleteModel(IMapper mapper, ICategoryRepository categoryRepository, IProductRepository productRepository
+            , ILogger<MainPageModel> logger, IWebHostEnvironment webHost)
         {
-            _context = context;
+            this.categoryRepository = categoryRepository;
+            _mapper = mapper;
+            _context = new InventoryManagementContext();
+            this.productRepository = productRepository;
+            var listCategory = categoryRepository.GetAll();
+            
+            webHostEnvironment = webHost;
+            _mapper = mapper;
         }
+      
 
         [BindProperty]
         public Product Product { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public  IActionResult OnGet(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+       
 
-            Product = await _context.Products
-                .Include(p => p.Category).FirstOrDefaultAsync(m => m.ProductId == id);
+            Product = productRepository.GetProductById(id);
 
             if (Product == null)
             {
@@ -38,22 +53,14 @@ namespace WebApplication.Pages.StaffPages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            
+            
+                productRepository.DeleteProductByID(id);
+            
 
-            Product = await _context.Products.FindAsync(id);
-
-            if (Product != null)
-            {
-                _context.Products.Remove(Product);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            return RedirectToPage("./MainPage");
         }
     }
 }

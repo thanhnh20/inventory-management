@@ -1,4 +1,5 @@
-﻿using Library.Model;
+﻿using AutoMapper;
+using Library.Model;
 using Library.Repository;
 using Library.Repository.RepositoryImpl;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ namespace WebApplication.Pages.StaffPages
         private readonly ICategoryRepository categoryRepo;
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
         public List<Category> categories { get; set; }
         public string Error { get; set; }
         private IProductRepository _productRepo;

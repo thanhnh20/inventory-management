@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "ReportInvoiceHistory";
     Layout = "~/Pages/Shared/_StaffLayout.cshtml";
+    int count = 1;
 }
 
 <h1>Report Invoice History</h1>
@@ -11,6 +12,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>STT</th>
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceInput[0].InputDate)
             </th>           
@@ -27,8 +29,10 @@
         </tr>
     </thead>
     <tbody>
+
 @foreach (var item in Model.InvoiceInput) {
         <tr>
+            <td>@(count++)</td>
             <td>
                 @Html.DisplayFor(modelItem => item.InputDate)
             </td>

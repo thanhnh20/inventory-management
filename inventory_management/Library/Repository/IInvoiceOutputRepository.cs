@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Repository
 {
-    public interface IInvoiceOutputRepository
+    public interface IInvoiceOutputRepository : IGenericRepository<InvoiceOutput>
     {
         public bool CreateInvoiceOutput(InvoiceOutput invoiceOutput, List<Product> listProduct);
     }

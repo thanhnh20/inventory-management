@@ -1,0 +1,65 @@
+﻿@page
+@model WebApplication.Pages.AdminPages.RevenueDetailModel
+
+@{
+    ViewData["Title"] = "RevenueDetail";
+    Layout = "_AdminLayout";
+}
+
+<h1>Revenue Details</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].ConsignmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].SellingPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].TotalPrice)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RevenueDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConsignmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Image)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellingPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

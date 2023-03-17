@@ -223,6 +223,10 @@ namespace WebApplication.Pages.StaffPages
 
                             //setup for incoive input detail
                             var check = invoiceInputRepository.CreateInvoiceInput(InvoiceInput, Consignment, ListInvoiceInput);
+                            if (check)
+                            {
+                                HttpContext.Session.Remove("LIST_INVOICE_INPUT");
+                            }
                         }
                     }
                     catch (Exception ex)
