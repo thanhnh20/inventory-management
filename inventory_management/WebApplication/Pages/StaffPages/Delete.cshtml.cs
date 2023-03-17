@@ -53,11 +53,11 @@ namespace WebApplication.Pages.StaffPages
             return Page();
         }
 
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost()
         {
             
             
-                productRepository.DeleteProductByID(id);
+                productRepository.DeleteProductByID(Product);
             
 
             return RedirectToPage("./MainPage");

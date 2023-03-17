@@ -17,9 +17,9 @@ namespace Library.Repository.RepositoryImpl
 
         public void Add(Product product) => ProductDAO.Instance.Add(product);
 
-        public void DeleteProductByID(int productId)
+        public void DeleteProductByID(Product product)
         {
-            ProductDAO.Instance.DeleteProductByID(productId);
+            ProductDAO.Instance.DeleteProductByID(product);
         }
 
         public IEnumerable<Product> GetAll() => ProductDAO.Instance.GetAll();
