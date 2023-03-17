@@ -18,9 +18,13 @@ namespace Library.Repository.RepositoryImpl
 
         public void DeleteUser(User user) => UserDAO.Instance.DeleteUser(user);
 
+        public int getTotalUserPage() => UserDAO.Instance.getTotalUserPage();
+
         public User GetUserByID(int userID) => UserDAO.Instance.GetUserByID(userID);
 
         public IEnumerable<User> GetUserList() => UserDAO.Instance.GetUserList();
+
+        public List<User> getUserPage(int pageSize, int pageIndex) => UserDAO.Instance.getUserPage(pageSize, pageIndex);
 
         public void InsertUser(User user) => UserDAO.Instance.InsertUser(user);
 
