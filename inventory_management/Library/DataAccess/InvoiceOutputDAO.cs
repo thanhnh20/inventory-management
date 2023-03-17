@@ -35,23 +35,6 @@ namespace Library.DataAccess
                 {
                     try
                     {
-                        foreach (var product in listProduct)
-                        {
-                            ConsignmentDetail newConsignmentDetail = new ConsignmentDetail()
-                            {
-                                ConsignmentId = (int)product.Status,
-                                ProductId = product.ProductId,
-                                Quantity = product.TotalQuantity
-                            };
-                            dbContext.ConsignmentDetails.Add(newConsignmentDetail);
-                            dbContext.SaveChanges();
-
-                            var Product = dbContext.Products.Where(p => p.ProductId == product.ProductId).FirstOrDefault();
-                            Product.TotalQuantity -= product.TotalQuantity;
-                            dbContext.SaveChanges();
-                        }
-
-
                         InvoiceOutput newInvoiceOutput = new InvoiceOutput()
                         {
                             CustomerId = invoiceOutput.CustomerId,
@@ -62,16 +45,26 @@ namespace Library.DataAccess
                         dbContext.InvoiceOutputs.Add(newInvoiceOutput);
                         dbContext.SaveChanges();
 
-                        foreach (Product product in listProduct)
+                        foreach (var productOutput in listProduct)
                         {
+                            var consignmentID = productOutput.Status;
+                            var consignmentDetail = dbContext.ConsignmentDetails.Where(l => l.ProductId == productOutput.ProductId && l.ConsignmentId == consignmentID).FirstOrDefault();
+                            var product = dbContext.Products.Where(p => p.ProductId == productOutput.ProductId).FirstOrDefault();
+                            consignmentDetail.Quantity = product.TotalQuantity - productOutput.TotalQuantity;
+                            product.TotalQuantity -= productOutput.TotalQuantity;
+
+                            dbContext.SaveChanges();
+
                             InvoiceOutputDetail invoiceOutputDetail = new InvoiceOutputDetail()
                             {
                                 OutputBillId = newInvoiceOutput.OutputBillId,
-                                ConsignmentId = (int)product.Status
+                                ConsignmentDetailId = consignmentDetail.ConsignmentDetailId,
+                                Quantity = (int)productOutput.TotalQuantity
                             };
                             dbContext.InvoiceOutputDetails.Add(invoiceOutputDetail);
                             dbContext.SaveChanges();
-                        }                       
+                        }
+                                       
                         transaction.Commit();
                         return true;
                     }

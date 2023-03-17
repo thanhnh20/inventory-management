@@ -19,12 +19,22 @@ namespace WebApplication.Pages.StaffPages
         public string Error { get; set; }
         IInvoiceInputRepository invoiceInputRepository;
 
-        public ReportInvoiceHistoryModel()
+        IProductRepository productRepository;
+
+        IConsignmentDetailRepository consignmentDetailRepository;
+
+        public ReportInvoiceHistoryModel(IProductRepository productRepository, IConsignmentDetailRepository consignmentDetailRepository)
         {
+            this.consignmentDetailRepository = consignmentDetailRepository;
+            this.productRepository = productRepository;
             this.invoiceInputRepository = new InvoiceInputRepository();
         }
 
         public IList<InvoiceInput> InvoiceInput { get;set; }
+
+        public IList<Product> ProductHasConsignment { get; set; }
+
+        public IEnumerable<IGrouping<int, ConsignmentDetail>> ConsignmentDetails { get; set; }
 
         public IActionResult OnGet()
         {
@@ -44,8 +54,11 @@ namespace WebApplication.Pages.StaffPages
                 }
                 else
                 {
-                    var listResult = invoiceInputRepository.ListAll();
-                    InvoiceInput = listResult;
+                    /*var listResultInvoice = invoiceInputRepository.ListAll();
+                    var listHasInConsignment = productRepository.GetAllProducInConsignment();                
+                    //InvoiceInput = listResultInvoice;
+                    ProductHasConsignment = listHasInConsignment;*/
+                    ConsignmentDetails = consignmentDetailRepository.GetConsignmentDetails();
                 }
             }
             return Page();

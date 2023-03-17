@@ -17,5 +17,7 @@ namespace Library.Repository.RepositoryImpl
         public ConsignmentDetail getConsignmentByID(int consID) => ConsignmentDetailDAO.Instance.getConsignmentByID(consID);
 
         public List<ConsignmentDetail> getConsignmentIDByProductID(int productID) => ConsignmentDetailDAO.Instance.getConsignmentIDByProductID(productID);
+
+        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails() => ConsignmentDetailDAO.Instance.GetConsignmentDetails();
     }
 }

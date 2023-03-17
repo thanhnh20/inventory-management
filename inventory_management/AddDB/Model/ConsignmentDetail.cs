@@ -22,6 +22,5 @@ namespace Library.Model
         public virtual Product Product { get; set; }
         public virtual ICollection<InvoiceInputDetail> InvoiceInputDetails { get; set; }
         public virtual ICollection<InvoiceOutputDetail> InvoiceOutputDetails { get; set; }
-
     }
 }

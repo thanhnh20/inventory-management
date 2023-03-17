@@ -13,5 +13,7 @@ namespace Library.Repository
         public List<ConsignmentDetail> getConsignmentIDByProductID(int productID);
 
         public ConsignmentDetail getConsignmentByID(int consID);
+
+        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails();
     }
 }

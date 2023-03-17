@@ -47,6 +47,17 @@ namespace Library.DataAccess
                         dbContext.Consignments.Add(newConsignment);
                         dbContext.SaveChanges();
 
+
+                        InvoiceInput newInvoiceInput = new InvoiceInput()
+                        {
+                            SuplierId = invoiceInput.SuplierId,
+                            UserId = invoiceInput.UserId,
+                            InputDate = invoiceInput.InputDate,
+                            Amount = invoiceInput.Amount,
+                        };
+                        dbContext.InvoiceInputs.Add(newInvoiceInput);
+                        dbContext.SaveChanges();
+
                         foreach (var product in listProduct)
                         {
                             ConsignmentDetail newConsignmentDetail = new ConsignmentDetail()
@@ -60,28 +71,17 @@ namespace Library.DataAccess
 
                             var Product = dbContext.Products.Where(p => p.ProductId == product.ProductId).FirstOrDefault();
                             Product.TotalQuantity += product.TotalQuantity;
-                            dbContext.SaveChanges(); 
-                        }  
-                        
+                            dbContext.SaveChanges();
 
-                        InvoiceInput newInvoiceInput = new InvoiceInput()
-                        {
-                            SuplierId = invoiceInput.SuplierId,
-                            UserId = invoiceInput.UserId,
-                            InputDate = invoiceInput.InputDate,
-                            Amount = invoiceInput.Amount,
-                        };
-                        dbContext.InvoiceInputs.Add(newInvoiceInput);
-                        dbContext.SaveChanges();
-
-                        InvoiceInputDetail invoiceInputDetail = new InvoiceInputDetail()
-                        {
-                            InputBillId = newInvoiceInput.InputBillId,
-                            ConsignmentId = newConsignment.ConsignmentId,
-                            Quantity = 1
-                        };
-                        dbContext.InvoiceInputDetails.Add(invoiceInputDetail);
-                        dbContext.SaveChanges();
+                            InvoiceInputDetail invoiceInputDetail = new InvoiceInputDetail()
+                            {
+                                InputBillId = newInvoiceInput.InputBillId,
+                                ConsignmentDetailId = newConsignmentDetail.ConsignmentDetailId,
+                                Quantity = (int)product.TotalQuantity
+                            };
+                            dbContext.InvoiceInputDetails.Add(invoiceInputDetail);
+                            dbContext.SaveChanges();
+                        }                          
 
                         transaction.Commit();
                         return true;
@@ -102,7 +102,6 @@ namespace Library.DataAccess
             {
                 return db.InvoiceInputs.Include(i => i.Suplier)
                                         .Include(i => i.InvoiceInputDetails)
-                                            .ThenInclude(i => i.Consignment).ThenInclude(i => i.ConsignmentDetails).ThenInclude(i => i.Product)
                                         .OrderByDescending(i => i.InputDate)
                                         .ToList();
             }
