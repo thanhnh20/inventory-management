@@ -131,6 +131,7 @@ namespace WebApplication.Pages.StaffPages
                                 TotalQuantity = product.TotalQuantity,
                                 FrontImage = product.FrontImage,
                                 Image = product.Image,
+                                ImportPrice = product.ImportPrice,
                             };
                             product.Category.Products = null;
                             var productCheck = listInvoiceOutput.Where(x => x.ProductId == ProductId).FirstOrDefault();
@@ -161,6 +162,7 @@ namespace WebApplication.Pages.StaffPages
                             TotalQuantity = product.TotalQuantity,
                             FrontImage = product.FrontImage,
                             Image = product.Image,
+                            ImportPrice = product.ImportPrice,
                         };
                         product.Category.Products = null;
                         productAdd.TotalQuantity = 1;
@@ -342,7 +344,10 @@ namespace WebApplication.Pages.StaffPages
                                 InvoiceOutput.Amount = amount;
 
                                 //setup for invoice input detail
-                                //invoiceOutputRepository.CreateInvoiceOutput(InvoiceOutput, ListInvoiceOutput);
+                                if(invoiceOutputRepository.CreateInvoiceOutput(InvoiceOutput, ListInvoiceOutput))
+                                {
+                                    HttpContext.Session.Remove("LIST_INVOICE_OUTPUT");
+                                }
                             }
                         }
                     }

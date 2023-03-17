@@ -10,6 +10,48 @@
 <h1>Report Invoice History</h1>
 
 <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                ConsID
+                            </th>        
+                            <th>
+                                ConsDetailID
+                            </th>
+                            <th>
+                                ProductName
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var items in Model.ConsignmentDetails)
+                    {   
+                        <tbody>
+                            <th>@items.Key</th>
+                            @foreach (var item in items) {
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ConsignmentDetailId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                </tr>
+                        }
+                            </tbody>
+    
+                    }
+                </table>
+@{/*
+<table class="table">
     <thead>
         <tr>
             <th>STT</th>
@@ -30,6 +72,7 @@
     </thead>
     <tbody>
 
+@{/**
 @foreach (var item in Model.InvoiceInput) {
         <tr>
             <td>@(count++)</td>
@@ -40,11 +83,10 @@
                 @Html.DisplayFor(modelItem => item.Suplier.SuplierName)
             </td>
             <th>       
-                @foreach(var i in @item.InvoiceInputDetails){
-                    @i.Consignment.ConsignmentId
-                }                
+                @Html.DisplayFor(modelItem => item.InvoiceInputDetails)         
             </th>
             <td>
+
                 <table>
                 @foreach(var i in @item.InvoiceInputDetails){
                         <thead>
@@ -55,18 +97,19 @@
                                 <th>Quantity</th>
                             </tr>                  
                         </thead>
+                        
                     <tbody>
-                            @foreach(var a in @i.Consignment.ConsignmentDetails)
+                            @foreach(var a in Model.ProductHasConsignment)
                             {
                                 <tr>
                                     <td></td>
-                                    <td>@a.Product.ProductName</td>
-                                    <td >@a.Product.ImportPrice</td>
-                                    <td>@a.Quantity</td>
+                                    <td>@a.ProductName</td>
+                                    <td >@a.ImportPrice</td>
+                                    <td>@a.ConsignmentDetails</td>
                                 </tr>
                                 
                             }                       
-                    </tbody>                   
+                    </tbody>                  
                  }
                  </table>
             </td>
@@ -75,5 +118,8 @@
             </th>
         </tr>
 }
+
     </tbody>
 </table>
+*/} 
+

@@ -42,5 +42,19 @@ namespace Library.DataAccess
                 return db.ConsignmentDetails.Where(c => c.ConsignmentDetailId == consID).FirstOrDefault();
             }
         }
+
+        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails()
+        {
+            using(var db = new InventoryManagementContext())
+            {
+                var listConsignmentDetails = db.ConsignmentDetails.ToList();
+                foreach (var cons in listConsignmentDetails)                   
+                {
+                    cons.Product = db.Products.Where(p => p.ProductId == cons.ProductId).FirstOrDefault();
+                }
+                var listCustom = listConsignmentDetails.GroupBy(l => l.ConsignmentId);
+                return listCustom;
+            }       
+        }
     }
 }
