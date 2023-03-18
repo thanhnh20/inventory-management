@@ -7,6 +7,26 @@
 }
 
 <h1>Revenue Details</h1>
+<hr />
+<form method ="post">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Search Type:</label>
+        <div class="col-sm-10">
+            <select name="type" class="form-control">
+                <option value="consignmentName" selected>Consignment Name</option>
+                <option value="productName">Product Name</option>
+                <option value="categoryName">Category Name</option>
+            </select>
+        </div>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <input class="form-control" type="text" name="search" />
+        <input class="form-control" type="hidden" name="outputBillId" value="@Model.OutputBillId" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
 
 <table class="table">
     <thead>
@@ -18,16 +38,19 @@
                 @Html.DisplayNameFor(model => model.RevenueDetails[0].CategoryName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RevenueDetails[0].ConsignmentName)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.RevenueDetails[0].Image)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RevenueDetails[0].SellingPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RevenueDetails[0].Quantity)
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].ConsignmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].QuantityLeft)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RevenueDetails[0].QuantityExported)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RevenueDetails[0].TotalPrice)
@@ -45,16 +68,19 @@
                     @Html.DisplayFor(modelItem => item.CategoryName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ConsignmentName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Image)
+                    <img src="~/images/@item.Image" style="width:75px; height:75px" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.SellingPrice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                    @Html.DisplayFor(modelItem => item.ConsignmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityLeft)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityExported)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPrice)

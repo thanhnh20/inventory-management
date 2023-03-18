@@ -11,13 +11,12 @@ namespace WebApplication.Models
         public string CustomerName { get; set; }
         [Required]
         [Display(Name = "Customer Address")]
-        [EmailAddress]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Customer Address out of range length (> 0 <= 50)")]
         public string CustomerAddress { get; set; }
         [Required]
         [Display(Name = "Phone")]
-        [DataType(DataType.PhoneNumber, ErrorMessage = "Phone must 10 digits")]
-        public string CustomerPhone { get; set; }
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone must 10 digits")]
+        public int CustomerPhone { get; set; }
         public int Status { get; set; }
     }
 }

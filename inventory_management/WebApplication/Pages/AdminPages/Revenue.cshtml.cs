@@ -10,6 +10,7 @@ using WebApplication.Models;
 using Library.Repository;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace WebApplication.Pages.AdminPages
 {
@@ -43,12 +44,48 @@ namespace WebApplication.Pages.AdminPages
             {
                 return RedirectToPage("../AdminPages/MainPage");
             }
+            await GetRevenueModel();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(string type, string search)
+        {
+            if(string.IsNullOrEmpty(search))
+            {
+                await GetRevenueModel();
+                return Page();
+            }
+            await GetRevenueModel();
+            if (Revenues == null || Revenues.Count == 0)
+            {
+                return Page();
+            }
+            if(type.Equals("exporterName"))
+            {
+                Revenues = Revenues.Where(r => r.ExporterName.ToLower().Contains(search.ToLower().Trim())).ToList();
+                if (Revenues == null || Revenues.Count == 0)
+                {
+                    Revenues = new List<RevenueViewModel>();
+                }
+            } else if(type.Equals("customerName"))
+            {
+                Revenues = Revenues.Where(r => r.CustomerName.ToLower().Contains(search.ToLower().Trim())).ToList();
+                if (Revenues == null || Revenues.Count == 0)
+                {
+                    Revenues = new List<RevenueViewModel>();
+                }
+            }
+            return Page();
+        }
+
+        private async Task<bool> GetRevenueModel()
+        {
             var invoiceOutputs = await _invoiceOutputRepo.GetMany();
             var revenues = new List<RevenueViewModel>();
             if (invoiceOutputs == null || invoiceOutputs.Count() == 0)
             {
                 Revenues = revenues;
-                return Page();
+                return false;
             }
             foreach (var invoiceOutput in invoiceOutputs)
             {
@@ -79,13 +116,13 @@ namespace WebApplication.Pages.AdminPages
                         OutputDate = invoiceOutput.OutputDate,
                         Amount = invoiceOutput.Amount,
                         OutputBillId = invoiceOutput.OutputBillId,
-                        UserName = user.FullName,                      
+                        ExporterName = user.FullName,
                         TotalPrice = totalPrice,
                     });
                 }
             }
             Revenues = revenues;
-            return Page();
+            return true;
         }
     }
 }

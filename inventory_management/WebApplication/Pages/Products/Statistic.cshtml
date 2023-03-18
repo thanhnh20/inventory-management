@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Products Statistic";
-    Layout = "_AdminLayout";
+    Layout = "_StaffLayout";
 }
 
 <h1>Products Statistic</h1>
@@ -48,6 +48,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].Quantity)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Unit)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -66,7 +69,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                <img src="~/images/@item.Image" style="width:75px; height:75px" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ImportPrice)
@@ -76,7 +79,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity) 
-                 @item.Unit
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit) 
             </td>
         </tr>
 }

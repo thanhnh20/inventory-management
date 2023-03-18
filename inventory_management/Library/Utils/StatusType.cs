@@ -9,7 +9,7 @@ namespace Library.Utils
     public enum StatusType
     {
         None = -1,
-        IsDeleted = 1,
-        Normal = 0
+        IsDeleted = 0,
+        Normal = 1
     }
 }

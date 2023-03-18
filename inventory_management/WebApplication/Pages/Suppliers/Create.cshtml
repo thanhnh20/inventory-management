@@ -3,11 +3,25 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "_AdminLayout";
+    Layout = "_StaffLayout";
 }
 
 <h4>New Supplier</h4>
 <hr />
+@{
+    if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+    if (!string.IsNullOrEmpty(ViewBag.Success))
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.Success
+        </div>
+    }
+}
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -27,7 +41,7 @@
                 <input asp-for="Suplier.TaxCode" class="form-control" />
                 <span asp-validation-for="Suplier.TaxCode" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Suplier.Status" value = "0" class="form-control" />
+            <input type="hidden" asp-for="Suplier.Status" value = "1" class="form-control" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
