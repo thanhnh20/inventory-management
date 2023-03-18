@@ -10,6 +10,20 @@
 
 <h4>Customer</h4>
 <hr />
+@{
+    if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+    if (!string.IsNullOrEmpty(ViewBag.Success))
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.Success
+        </div>
+    }
+}
 <div class="row">
     <div class="col-md-4">
         <form method="post">

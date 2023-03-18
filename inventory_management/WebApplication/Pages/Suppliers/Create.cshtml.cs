@@ -61,7 +61,21 @@ namespace WebApplication.Pages.Suppliers
                 return Page();
             }
 
-            var supplier = _mapper.Map<Suplier>(Suplier);
+            var supplier = await _supplierRepository.GetOne(sup => sup.SuplierName.ToLower().Equals(Suplier.SuplierName.ToLower()));
+            if (supplier != null)
+            {
+                ViewData["Error"] = "Already exist supplier name!";
+                return Page();
+            }
+
+            supplier = await _supplierRepository.GetOne(sup => sup.SuplierPhone.ToLower().Equals(Suplier.SuplierPhone.ToString().ToLower()));
+            if (supplier != null)
+            {
+                ViewData["Error"] = "Already exist Phone number!";
+                return Page();
+            }
+
+            supplier = _mapper.Map<Suplier>(Suplier);
             if (supplier != null)
             {
                 bool result = await _supplierRepository.Add(supplier);

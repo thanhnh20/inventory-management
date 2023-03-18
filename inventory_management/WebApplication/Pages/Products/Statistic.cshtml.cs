@@ -37,15 +37,15 @@ namespace WebApplication.Pages.Products
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var accountJson = HttpContext.Session.GetString("ADMIN");
+            var accountJson = HttpContext.Session.GetString("STAFF");
             if (string.IsNullOrEmpty(accountJson))
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             var account = JsonConvert.DeserializeObject<User>(accountJson);
             if (account == null)
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             Consignments = (await _consignmentRepo.GetMany()).Select(c => new SelectListItem()
             {
@@ -103,15 +103,15 @@ namespace WebApplication.Pages.Products
 
         public async Task<IActionResult> OnPostAsync(int consignmentId)
         {
-            var accountJson = HttpContext.Session.GetString("ADMIN");
+            var accountJson = HttpContext.Session.GetString("STAFF");
             if (string.IsNullOrEmpty(accountJson))
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             var account = JsonConvert.DeserializeObject<User>(accountJson);
             if (account == null)
             {
-                return RedirectToPage("../AdminPages/MainPage");
+                return RedirectToPage("../StaffPages/MainPage");
             }
             if (consignmentId == -1)
             {
@@ -128,16 +128,16 @@ namespace WebApplication.Pages.Products
                 var consignment = await _consignmentRepo.GetOne(c => c.ConsignmentId == consignmentId);
                 if (consignment == null)
                 {
-                    return RedirectToPage("../Products/Statistic");
+                    return Page();
                 }
                 if (consignment.Status == (int)StatusType.IsDeleted)
                 {
-                    return RedirectToPage("../Products/Statistic");
+                    return Page();
                 }
                 var consignmentDetails = await _consignmentDetailRepo.GetMany(cd => cd.ConsignmentId == consignmentId);
                 if (consignmentDetails == null || consignmentDetails.Count() == 0)
                 {
-                    return RedirectToPage("../Products/Statistic");
+                    return Page();
                 }
                 foreach (var consignmentDetail in consignmentDetails)
                 {

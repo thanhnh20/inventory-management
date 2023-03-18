@@ -72,7 +72,25 @@ namespace WebApplication.Pages.Customers
             {
                 return Page();
             }
-            var customer = _mapper.Map<Customer>(Customer);
+            var customer = await _customerRepository.GetOne(cus => cus.CustomerName.ToLower().Equals(Customer.CustomerName.ToLower()));
+            if (customer != null)
+            {
+                ViewData["Error"] = "Already exist customer name!";
+                return Page();
+            }
+            customer = await _customerRepository.GetOne(cus => cus.CustomerAddress.ToLower().Equals(Customer.CustomerAddress.ToLower()));
+            if (customer != null)
+            {
+                ViewData["Error"] = "Already exist customer address!";
+                return Page();
+            }
+            customer = await _customerRepository.GetOne(cus => cus.CustomerPhone.ToLower().Equals(Customer.CustomerPhone.ToString().ToLower()));
+            if (customer != null)
+            {
+                ViewData["Error"] = "Already exist Phone number!";
+                return Page();
+            }
+            customer = _mapper.Map<Customer>(Customer);
             if (customer == null)
             {
                 return Page();

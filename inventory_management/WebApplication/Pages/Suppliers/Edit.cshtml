@@ -3,13 +3,27 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "_AdminLayout";
+    Layout = "_StaffLayout";
 }
 
 <h1>Edit</h1>
 
 <h4>Suplier</h4>
 <hr />
+@{
+    if (!string.IsNullOrEmpty(ViewBag.Error))
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+    if (!string.IsNullOrEmpty(ViewBag.Success))
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.Success
+        </div>
+    }
+}
 <div class="row">
     <div class="col-md-4">
         <form method="post">
