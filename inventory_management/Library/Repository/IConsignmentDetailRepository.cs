@@ -14,6 +14,8 @@ namespace Library.Repository
 
         public ConsignmentDetail getConsignmentByID(int consID);
 
-        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails();
+        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails(int consignmentID);
+
+        public int GetConsignmentIDDetailsByID(int id);
     }
 }

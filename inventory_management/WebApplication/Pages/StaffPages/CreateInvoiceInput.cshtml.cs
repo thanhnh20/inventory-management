@@ -87,6 +87,7 @@ namespace WebApplication.Pages.StaffPages
             if (string.IsNullOrEmpty(accountJson))
             {
                 Error = "Account Json is null";
+                return Redirect("~/HomePages/Home");
             }
             else
             {
@@ -94,6 +95,7 @@ namespace WebApplication.Pages.StaffPages
                 if(accountJson == null)
                 {
                     Error = "Account Session is null";
+                    return Redirect("~/HomePages/Home");
                 }
                 else
                 {
@@ -122,6 +124,7 @@ namespace WebApplication.Pages.StaffPages
             if (string.IsNullOrEmpty(accountJson))
             {
                 Error = "Account Json is null";
+                return Redirect("~/HomePages/Home");
             }
             else
             {
@@ -129,6 +132,7 @@ namespace WebApplication.Pages.StaffPages
                 if(accountSession == null)
                 {
                     Error = "Account Session is null";
+                    return Redirect("~/HomePages/Home");
                 }
                 else
                 {
@@ -197,6 +201,7 @@ namespace WebApplication.Pages.StaffPages
             if (string.IsNullOrEmpty(accountJson))
             {
                 Error = "Account Json is null";
+                return Redirect("~/HomePages/Home");
             }
             else
             {
@@ -204,6 +209,7 @@ namespace WebApplication.Pages.StaffPages
                 if(AccountSession == null)
                 {
                     Error = "Account Session is null";
+                    return Redirect("~/HomePages/Home");
                 }
                 else
                 {
@@ -244,6 +250,7 @@ namespace WebApplication.Pages.StaffPages
             if (string.IsNullOrEmpty(accountJson))
             {
                 Error = "Account Json is null";
+                return Redirect("~/HomePages/Home");
             }
             else
             {
@@ -251,6 +258,7 @@ namespace WebApplication.Pages.StaffPages
                 if(AccountSession == null)
                 {
                     Error = "Account Session is null";
+                    return Redirect("~/HomePages/Home");
                 }
                 else
                 {

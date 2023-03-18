@@ -1,0 +1,65 @@
+﻿@page
+@model WebApplication.Pages.AdminPages.InvoiceInputDetailHistoryModel
+@{
+}
+@{
+    ViewData["Title"] = "ReportInvoiceHistory";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Invoice Detail</h1>
+<table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Consignment ID
+                            </th>        
+                            <th>
+                                Product Name
+                            </th>
+                            <th>
+                                Category
+                            </th>
+                            <th>
+                                Image
+                            </th>
+                            <th>
+                                Import Price
+                            </th>
+                            <th>
+                                Quantity import
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var items in Model.ConsignmentDetails)
+                    {   
+                        <tbody>
+                            <th>@items.Key</th>
+                            @foreach (var item in items) {
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.ProductName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.Category.CategoryName)
+                                    </td>
+                                    <td>
+                                        <img src="~/images/@item.Product.Image" style="width:75px; height:75px" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.ImportPrice)
+                                    </td>
+                                    <td>
+                                        @{int quantity = item.InvoiceInputDetails.Select(i => i.Quantity).FirstOrDefault();}
+                                        @quantity
+                                    </td>
+                                </tr>
+                        }
+                            </tbody>
+    
+                    }
+                </table>
+                <a asp-page="./InvoiceInputReport" >Back to List</a>

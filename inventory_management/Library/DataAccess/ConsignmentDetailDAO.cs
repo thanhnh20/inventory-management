@@ -1,4 +1,5 @@
 ﻿using Library.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,18 +44,28 @@ namespace Library.DataAccess
             }
         }
 
-        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails()
+        public IEnumerable<IGrouping<int, ConsignmentDetail>> GetConsignmentDetails(int ConsignmentID)
         {
             using(var db = new InventoryManagementContext())
             {
-                var listConsignmentDetails = db.ConsignmentDetails.ToList();
+                var listConsignmentDetails = db.ConsignmentDetails.Where(c => c.ConsignmentId == ConsignmentID)
+                    .Include(i => i.InvoiceInputDetails)
+                    .ToList();
                 foreach (var cons in listConsignmentDetails)                   
                 {
-                    cons.Product = db.Products.Where(p => p.ProductId == cons.ProductId).FirstOrDefault();
+                    cons.Product = db.Products.Where(p => p.ProductId == cons.ProductId).Include(i => i.Category).FirstOrDefault();
                 }
                 var listCustom = listConsignmentDetails.GroupBy(l => l.ConsignmentId);
                 return listCustom;
             }       
+        }
+
+        public int GetConsignmentIDDetailsByID(int id)
+        {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.ConsignmentDetails.Where(c => c.ConsignmentDetailId == id).FirstOrDefault().ConsignmentId;
+            }
         }
     }
 }
