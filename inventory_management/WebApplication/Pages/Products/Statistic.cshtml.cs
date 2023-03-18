@@ -23,6 +23,11 @@ namespace WebApplication.Pages.Products
         private readonly IProductRepository _productRepo;
         private readonly ICategoryRepository _categoryRepo;
 
+        [BindProperty(SupportsGet = true)]
+        public int PageIndex { get; set; } = 1;
+
+        public int TotalPages { get; set; }
+
         public StatisticModel(IConsignmentRepository consignmentRepo, IConsignmentDetailRepository consignmentDetailRepo, IProductRepository productRepo, ICategoryRepository categoryRepo)
         {
             _consignmentRepo = consignmentRepo;
@@ -95,9 +100,11 @@ namespace WebApplication.Pages.Products
                             SellingPrice = product.SellingPrice.Value,
                             Unit = product.Unit,
                         });
-                    }
+                    }                   
                 }
             }
+            TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
+            Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
             return Page();
         }
 

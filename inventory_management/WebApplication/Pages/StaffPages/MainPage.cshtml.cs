@@ -66,8 +66,7 @@ namespace WebApplication.Pages.StaffPages
                 var list = productRepo.GetAll();
                 Product = list.ToList();
                 TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
-                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
-                
+                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();               
             }
             
         }
@@ -75,6 +74,8 @@ namespace WebApplication.Pages.StaffPages
         public IActionResult OnGetLogOut()
         {
             HttpContext.Session.Remove("STAFF");
+            HttpContext.Session.Remove("LIST_INVOICE_INPUT");
+            HttpContext.Session.Remove("LIST_INVOICE_OUTPUT");
             return Redirect(_urlHomePage);
         }
         public IActionResult OnGetLogin()

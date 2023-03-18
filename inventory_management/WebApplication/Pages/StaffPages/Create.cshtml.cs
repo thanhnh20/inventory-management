@@ -81,6 +81,7 @@ namespace WebApplication.Pages.StaffPages
             }
             string uniqueFileName = UploadedFile();
             Product.Image = uniqueFileName;
+            Product.TotalQuantity = 0;
              _productRepo.Add(Product);
             
 

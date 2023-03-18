@@ -72,6 +72,7 @@ namespace WebApplication.Pages.Customers
             {
                 return Page();
             }
+            /*
             var customer = await _customerRepository.GetOne(cus => cus.CustomerName.ToLower().Equals(Customer.CustomerName.ToLower()));
             if (customer != null)
             {
@@ -89,8 +90,8 @@ namespace WebApplication.Pages.Customers
             {
                 ViewData["Error"] = "Already exist Phone number!";
                 return Page();
-            }
-            customer = _mapper.Map<Customer>(Customer);
+            }*/
+            var customer = _mapper.Map<Customer>(Customer);
             if (customer == null)
             {
                 return Page();

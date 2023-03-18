@@ -32,7 +32,7 @@ namespace WebApplication.Pages.AdminPages
             this.userRepository = userRepository;
         }
 
-        public IActionResult OnGet(string searchString, int p = 1, int s =3)
+        public IActionResult OnGet(string searchString)
         {
             CurUser = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("ADMIN"));
             if(CurUser == null)
@@ -59,10 +59,11 @@ namespace WebApplication.Pages.AdminPages
             else
             {
                 User = (IList<User>) userRepository.GetUserList();
+                /*
                 User = userRepository.getUserPage(p, s);
                 pageSize = s;
                 totalUser = userRepository.getTotalUserPage();
-                pageNo = p;
+                pageNo = p;*/
 
             }
            

@@ -15,10 +15,8 @@ namespace WebApplication.Models
         [Display(Name = "Unit")]
         public string Unit { get; set; }
         [Display(Name = "Import Price")]
-        [DataType(DataType.Currency)]
         public double ImportPrice { get; set; }
         [Display(Name = "Selling Price")]
-        [DataType(DataType.Currency)]
         public double SellingPrice { get; set; }
         [Display(Name = "Consignment Name")]
 

@@ -16,7 +16,7 @@ namespace WebApplication.Models
         [Required]
         [Display(Name = "Phone")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone must 10 digits")]
-        public int CustomerPhone { get; set; }
+        public string CustomerPhone { get; set; }
         public int Status { get; set; }
     }
 }

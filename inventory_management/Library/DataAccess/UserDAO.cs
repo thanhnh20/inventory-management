@@ -38,7 +38,7 @@ namespace Library.DataAccess
             var list = new List<User>();
             using(var db = new InventoryManagementContext()) 
             {
-                list = db.Users.ToList();
+                list = db.Users.Where(c => c.RoleId == 1).ToList();
             }
 
             return list;

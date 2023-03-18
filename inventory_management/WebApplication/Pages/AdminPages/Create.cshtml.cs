@@ -31,6 +31,7 @@ namespace WebApplication.Pages.AdminPages
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public IActionResult OnPost()
         {
+
             if (!ModelState.IsValid)
             {
                 return Page();

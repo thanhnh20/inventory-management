@@ -72,7 +72,7 @@ namespace WebApplication.Pages.Suppliers
             {
                 return Page();
             }
-
+            /*
             var supplier = await _supplierRepository.GetOne(sup => sup.SuplierName.ToLower().Equals(Suplier.SuplierName.ToLower()));
             if (supplier != null)
             {
@@ -86,8 +86,8 @@ namespace WebApplication.Pages.Suppliers
                 ViewData["Error"] = "Already exist Phone number!";
                 return Page();
             }
-
-            supplier = _mapper.Map<Suplier>(Suplier);
+            */
+            var supplier = _mapper.Map<Suplier>(Suplier);
             if (supplier == null)
             {
                 return Page();
