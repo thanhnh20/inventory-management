@@ -104,5 +104,40 @@
                 }
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                @if (Model.PageIndex == 1)
+                {
+                    <li class="page-item disabled"><a class="page-link">Previous</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" href="?PageIndex=@(Model.PageIndex - 1)@(Model.searchString != null ? "&searchString=" + Model.searchString : "")">Previous</a></li>
+                }
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    if (i == Model.PageIndex)
+                    {
+                        <li class="page-item active"><a class="page-link">@i</a></li>
+                    }
+                    else
+                    {
+                <li class="page-item"><a class="page-link" href="?PageIndex=@i@(Model.searchString != null ? "&searchString=" + Model.searchString : "")">@i</a></li>
+                    }
+                }
+
+                @if (Model.PageIndex == Model.TotalPages)
+                {
+                            <li class="page-item disabled"><a class="page-link">Next</a></li>
+                }
+                else
+                {
+                            <li class="page-item"><a class="page-link" href="?PageIndex=@(Model.PageIndex + 1)@(Model.searchString != null ? "&searchString=" + Model.searchString : "")">Next</a></li>
+                }
+                </ul>
+        </nav>
+
     }
 }

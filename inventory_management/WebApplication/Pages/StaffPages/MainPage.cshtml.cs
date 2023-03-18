@@ -14,7 +14,6 @@ namespace WebApplication.Pages.StaffPages
 {
     public class MainPageModel : PageModel
     {
-
         private readonly ILogger _logger;
         public string Error { get; set; }
         public IProductRepository productRepo;
@@ -29,12 +28,19 @@ namespace WebApplication.Pages.StaffPages
         public string? searchString { get; set; }
         public IList<Product> Product { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int PageIndex { get; set; } = 1;
+
+        public int TotalPages { get; set; }
+
         public IActionResult OnGet()
         {
             try
             {
-                var AccountSession = JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
+                JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
                 Product = productRepo.GetProducts();
+                TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
+                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
             }
             catch (Exception ex)
             {
@@ -47,16 +53,23 @@ namespace WebApplication.Pages.StaffPages
 
         public void OnPost()
         {
-            if(searchString != null)
+            if (searchString != null)
             {
                 var list = productRepo.GetAllAndDescending(searchString);
                 Product = list.ToList();
+                TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
+                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
+                
             }
             else
             {
                 var list = productRepo.GetAll();
                 Product = list.ToList();
+                TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
+                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
+                
             }
+            
         }
 
         public IActionResult OnGetLogOut()
@@ -69,5 +82,6 @@ namespace WebApplication.Pages.StaffPages
             return Redirect("~/HomePages/Home");
         }
     }
+
 }
 

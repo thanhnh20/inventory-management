@@ -125,7 +125,7 @@ namespace Library.DataAccess
          }
         public IEnumerable<Product> GetAllAndDescending(string name)
         {
-            return db.Products.Where(p => p.ProductName == name).OrderByDescending(p => p.Status).ToList();
+            return db.Products.Where(p => p.ProductName.Contains(name)).OrderByDescending(p => p.Status).ToList();
         }
     }
 }
