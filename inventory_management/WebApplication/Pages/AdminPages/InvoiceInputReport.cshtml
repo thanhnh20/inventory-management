@@ -1,0 +1,56 @@
+﻿@page
+@model WebApplication.Pages.AdminPages.InvoiceInputReportModel
+
+@{
+    ViewData["Title"] = "InvoiceInputReport";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Invoice Input Report</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].InputBillId)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].Suplier)
+            </th>
+            <th>
+                Staff Create
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].InputDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceInput[0].Amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.InvoiceInput) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputBillId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suplier.SuplierName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InputDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                <a asp-page="./InvoiceInputDetailHistory" asp-route-inputBillID="@item.InputBillId">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

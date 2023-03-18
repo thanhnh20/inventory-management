@@ -102,6 +102,7 @@ namespace Library.DataAccess
             {
                 return db.InvoiceInputs.Include(i => i.Suplier)
                                         .Include(i => i.InvoiceInputDetails)
+                                        .Include(i => i.User)
                                         .OrderByDescending(i => i.InputDate)
                                         .ToList();
             }
