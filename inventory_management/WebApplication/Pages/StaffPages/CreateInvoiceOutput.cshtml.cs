@@ -85,6 +85,7 @@ namespace WebApplication.Pages.StaffPages
                             foreach (var Product in ListInvoiceOutput)
                             {
                                 ViewData[Product.ProductId + ""] = consignmentDetailRepository.getConsignmentIDByProductID(Product.ProductId);
+                                ConsignmentDetail = Product.ConsignmentDetails.FirstOrDefault();
                             }
                         }
                     }
@@ -244,6 +245,7 @@ namespace WebApplication.Pages.StaffPages
                         {
                             InvoiceOutput.OutputDate = DateTime.Now;
                             ViewData["CustomerName"] = new SelectList(customerRepository.GetAll(), "CustomerId", "CustomerName");
+                            var consignmentDetail = consignmentDetailRepository.getConsignmentByID(ConsignmentDetail.ConsignmentDetailId);
                             if (ListInvoiceOutput.Count > 0)
                             {
                                 foreach (var Product in ListInvoiceOutput)
@@ -259,20 +261,30 @@ namespace WebApplication.Pages.StaffPages
                                 msgErrorQuantity = $"The total Product {Product.ProductName} not enough according to your input quantity";
                                 check = false;
                             }
+                            if (Product.TotalQuantity > consignmentDetail.Quantity)
+                            {
+                                msgWarningQuantity = $"The quantity Product in consignment have ID {consignmentDetail.ConsignmentId} not enough";
+                                check = false;
+                            }
                             if (!check)
                             {
                                 Products = ListInvoiceOutput.ToList();
                                 return Page();
                             }
                             else
-                            {
-                                var consignmentDetail = consignmentDetailRepository.getConsignmentByID(ConsignmentDetail.ConsignmentDetailId);
-                                if (Product.TotalQuantity > consignmentDetail.Quantity)
-                                {
-                                    msgWarningQuantity = $"The quantity Product in consignment have ID {consignmentDetail.ConsignmentId} not enough The system will automatically pick up more from other consignments";
-                                }
+                            {                             
                                 productCheck.Status = consignmentDetail.ConsignmentId;
                                 productCheck.TotalQuantity = Product.TotalQuantity;
+                                if(productCheck.ConsignmentDetails.Count == 0)
+                                {
+                                    productCheck.ConsignmentDetails = new List<ConsignmentDetail>();
+                                    productCheck.ConsignmentDetails.Add(consignmentDetail);
+                                }
+                                else
+                                {
+                                    productCheck.ConsignmentDetails.FirstOrDefault().ConsignmentDetailId = consignmentDetail.ConsignmentDetailId;
+                                    productCheck.ConsignmentDetails.FirstOrDefault().ConsignmentId = consignmentDetail.ConsignmentId;
+                                }
                                 HttpContext.Session.SetString("LIST_INVOICE_OUTPUT", JsonConvert.SerializeObject(ListInvoiceOutput));
                                 Products = ListInvoiceOutput.ToList();
                             }
@@ -284,8 +296,9 @@ namespace WebApplication.Pages.StaffPages
                         Msg = "List Invoice output is null";
                     }
                 }
+
             }
-            return Page();
+            return RedirectToPage();
         }
 
         public IActionResult OnPost()

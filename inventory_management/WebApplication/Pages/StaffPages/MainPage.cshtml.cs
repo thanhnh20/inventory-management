@@ -39,8 +39,8 @@ namespace WebApplication.Pages.StaffPages
             {
                 JsonConvert.DeserializeObject<User>(HttpContext.Session.GetString("STAFF"));
                 Product = productRepo.GetProducts();
-                TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
-                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
+                TotalPages = (int)Math.Ceiling(Product.Count / (double)6); // assuming 10 items per page
+                Product = Product.Skip((PageIndex - 1) * 6).Take(6).ToList();
             }
             catch (Exception ex)
             {
@@ -57,16 +57,16 @@ namespace WebApplication.Pages.StaffPages
             {
                 var list = productRepo.GetAllAndDescending(searchString);
                 Product = list.ToList();
-                TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
-                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
+                TotalPages = (int)Math.Ceiling(Product.Count / (double)6); // assuming 10 items per page
+                Product = Product.Skip((PageIndex - 1) * 6).Take(6).ToList();
                 
             }
             else
             {
                 var list = productRepo.GetAll();
                 Product = list.ToList();
-                TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
-                Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();               
+                TotalPages = (int)Math.Ceiling(Product.Count / (double)6); // assuming 10 items per page
+                Product = Product.Skip((PageIndex - 1) * 6).Take(6).ToList();               
             }
             
         }

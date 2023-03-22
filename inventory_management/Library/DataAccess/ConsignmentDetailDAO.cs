@@ -32,7 +32,7 @@ namespace Library.DataAccess
         {
             using (var db = new InventoryManagementContext())
             {
-                return db.ConsignmentDetails.Where(c => c.ProductId == productID).ToList();
+                return db.ConsignmentDetails.Where(c => c.ProductId == productID && c.Quantity > 0).ToList();
             }
         }
 

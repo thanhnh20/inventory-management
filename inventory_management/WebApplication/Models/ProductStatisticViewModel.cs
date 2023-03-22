@@ -18,9 +18,9 @@ namespace WebApplication.Models
         public double ImportPrice { get; set; }
         [Display(Name = "Selling Price")]
         public double SellingPrice { get; set; }
-        [Display(Name = "Consignment Name")]
+        [Display(Name = "Consignment ID")]
 
-        public string ConsignmentName { get; set; }
+        public int ConsignmentID { get; set; }
         [Display(Name = "Quantity")]
 
         public int Quantity { get; set; }

@@ -92,7 +92,7 @@ namespace WebApplication.Pages.Products
                         {
                             ProductName = product.ProductName,
                             CategoryName = category.CategoryName,
-                            ConsignmentName = consignment.ConsignmentName,
+                            ConsignmentID = consignment.ConsignmentId,
                             Description = product.Description,
                             Image = product.Image,
                             ImportPrice = product.ImportPrice.Value,
@@ -103,8 +103,8 @@ namespace WebApplication.Pages.Products
                     }                   
                 }
             }
-            TotalPages = (int)Math.Ceiling(Product.Count / (double)4); // assuming 10 items per page
-            Product = Product.Skip((PageIndex - 1) * 4).Take(4).ToList();
+            TotalPages = (int)Math.Ceiling(Product.Count / (double)6); // assuming 10 items per page
+            Product = Product.Skip((PageIndex - 1) * 6).Take(6).ToList();
             return Page();
         }
 
@@ -166,7 +166,7 @@ namespace WebApplication.Pages.Products
                     {
                         ProductName = product.ProductName,
                         CategoryName = category.CategoryName,
-                        ConsignmentName = consignment.ConsignmentName,
+                        ConsignmentID = consignment.ConsignmentId,
                         Description = product.Description,
                         Image = product.Image,
                         ImportPrice = product.ImportPrice.Value,

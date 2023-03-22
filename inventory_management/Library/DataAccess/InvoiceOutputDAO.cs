@@ -50,9 +50,15 @@ namespace Library.DataAccess
                             var consignmentID = productOutput.Status;
                             var consignmentDetail = dbContext.ConsignmentDetails.Where(l => l.ProductId == productOutput.ProductId && l.ConsignmentId == consignmentID).FirstOrDefault();
                             var product = dbContext.Products.Where(p => p.ProductId == productOutput.ProductId).FirstOrDefault();
-                            consignmentDetail.Quantity = product.TotalQuantity - productOutput.TotalQuantity;
+                            consignmentDetail.Quantity -=  productOutput.TotalQuantity;
                             product.TotalQuantity -= productOutput.TotalQuantity;
+                            
+                            dbContext.SaveChanges();
 
+                            if(product.TotalQuantity == 0)
+                            {
+                                product.Status = 0;
+                            }
                             dbContext.SaveChanges();
 
                             InvoiceOutputDetail invoiceOutputDetail = new InvoiceOutputDetail()
