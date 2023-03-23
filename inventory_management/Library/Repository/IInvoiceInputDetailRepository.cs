@@ -10,5 +10,7 @@ namespace Library.Repository
     public interface IInvoiceInputDetailRepository
     {
         public InvoiceInputDetail getConsignmentDetailIDByInputBill(int intputID);
+
+        public InvoiceInputDetail getInvoiceInputDetailById(int intputDetailID);
     }
 }

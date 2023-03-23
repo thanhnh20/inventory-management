@@ -49,6 +49,7 @@ namespace WebApplication.Pages.AdminPages
                     var invoiceinputDetail = invoiceInputDetailRepository.getConsignmentDetailIDByInputBill(inputBillID);
                     var consignmentID = consignmentDetailRepository.GetConsignmentIDDetailsByID(invoiceinputDetail.ConsignmentDetailId);
                     ConsignmentDetails = consignmentDetailRepository.GetConsignmentDetails(consignmentID);
+
                 }
             }
             return Page();

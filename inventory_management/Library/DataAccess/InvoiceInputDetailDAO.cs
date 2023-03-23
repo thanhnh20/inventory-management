@@ -34,5 +34,14 @@ namespace Library.DataAccess
                 return db.InvoiceInputDetails.Where(c => c.InputBillId == intputID).FirstOrDefault();
             }
         }
+
+        public InvoiceInputDetail getInvoiceInputDetailById(int intputDetailID)
+        {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.InvoiceInputDetails.Where(c => c.InputDetailId == intputDetailID).FirstOrDefault();
+            }
+        }
+
     }
 }

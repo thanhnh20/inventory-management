@@ -24,7 +24,7 @@
     }else{
         <h1>Create Invoice Input</h1>
             <table class="table">
-                <thead>
+                <thead class="table-info">
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.Products[0].ProductName)
@@ -38,6 +38,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Products[0].TotalQuantity)
                         </th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>

@@ -11,5 +11,7 @@ namespace Library.Repository.RepositoryImpl
     public class InvoiceInputDetailRepositoryIml : IInvoiceInputDetailRepository
     {
         public InvoiceInputDetail getConsignmentDetailIDByInputBill(int intputID) => InvoiceInputDetailDAO.Instance.getConsignmentDetailIDByInputBill(intputID);
+
+        public InvoiceInputDetail getInvoiceInputDetailById(int intputDetailID) => InvoiceInputDetailDAO.Instance.getInvoiceInputDetailById(intputDetailID);
     }
 }

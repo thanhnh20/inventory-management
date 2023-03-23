@@ -60,11 +60,36 @@ namespace Library.DataAccess
             }       
         }
 
+
         public int GetConsignmentIDDetailsByID(int id)
         {
             using (var db = new InventoryManagementContext())
             {
                 return db.ConsignmentDetails.Where(c => c.ConsignmentDetailId == id).FirstOrDefault().ConsignmentId;
+            }
+        }
+
+        public List<ConsignmentDetail> GetConsignmentDetails()
+        {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.ConsignmentDetails
+                    .Include(i => i.Consignment)
+                    .Include(i => i.Product).ThenInclude(i => i.Category)
+                    .Include(i => i.InvoiceInputDetails).ThenInclude(i => i.InputBill).ThenInclude(i => i.Suplier)                                                                
+                    .ToList();
+            }
+        }
+
+        public List<ConsignmentDetail> GetConsignmentDetailsOutput()
+        {
+            using (var db = new InventoryManagementContext())
+            {
+                return db.ConsignmentDetails
+                    .Include(i => i.Consignment)
+                    .Include(i => i.Product).ThenInclude(i => i.Category)
+                    .Include(i => i.InvoiceOutputDetails).ThenInclude(i => i.OutputBill).ThenInclude(i => i.Customer)
+                    .ToList();
             }
         }
     }

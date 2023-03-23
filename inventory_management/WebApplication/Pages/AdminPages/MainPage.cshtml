@@ -4,10 +4,9 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = "Main page";
 }
-<h1>Admin Page</h1>
-<h4>Welcome,  @Model.CurUser.FullName</h4>
+<h1>Staff Management</h1>
 <p>
-    <a asp-page="Create" class="btn btn-success">Create New</a>
+    <a asp-page="Create">Create New</a>
 </p>
 <form method="get">
     <input type="text" name="searchString" />
@@ -15,7 +14,7 @@
 </form>
 <div class="table-responsive">
 <table class="table">
-    <thead class="table-primary">
+    <thead class="table-info">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.User[0].Username)
@@ -81,16 +80,16 @@
                 @if(item.RoleId == 0)
                 {
                  <td class="row">
-                     <a asp-page="./Edit" asp-route-id="@item.UserId" class="btn btn-primary">Edit</a> |
-                     <a asp-page="./Details" asp-route-id="@item.UserId" class="btn btn-warning">Details</a> |
+                     <a asp-page="./Edit" asp-route-id="@item.UserId">Edit</a> |
+                     <a asp-page="./Details" asp-route-id="@item.UserId">Details</a> |
                 </td>
                 }
                 else if (item.RoleId == 1)
                 {
                    <td class="row">
-                       <a asp-page="./Edit" asp-route-id="@item.UserId" class="btn btn-primary">Edit</a> |
-                       <a asp-page="./Details" asp-route-id="@item.UserId" class="btn btn-warning">Details</a>
-                       <a asp-page="./Delete" asp-route-id="@item.UserId" class="btn btn-danger">Delete</a>
+                       <a asp-page="./Edit" asp-route-id="@item.UserId" >Edit</a> |
+                       <a asp-page="./Details" asp-route-id="@item.UserId" >Details</a>
+                       <a asp-page="./Delete" asp-route-id="@item.UserId" >Delete</a>
                    </td>
                 }
            </tr>     

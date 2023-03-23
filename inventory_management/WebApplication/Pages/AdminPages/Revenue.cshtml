@@ -26,8 +26,10 @@
     </div>
 </form>
 
+<a class="btn btn-outline-success" asp-page="./Revenue" asp-page-handler="ExportExcel">Export File Excel</a>
+<br />
 <table class="table">
-    <thead>
+    <thead class="table-info">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Revenues[0].CustomerName)
@@ -44,6 +46,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Revenues[0].TotalPrice)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

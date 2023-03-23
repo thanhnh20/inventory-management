@@ -7,9 +7,10 @@
 }
 
 <h1>Invoice Input Report</h1>
-
+<a class="btn btn-outline-success" asp-page="./InvoiceInputReport" asp-page-handler="ExportExcel">Export File Excel</a>
+<br/>
 <table class="table">
-    <thead>
+    <thead class="table-info">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceInput[0].InputBillId)
