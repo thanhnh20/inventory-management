@@ -334,7 +334,23 @@ namespace WebApplication.Pages.StaffPages
                                     msgErrorQuantity = $"The total Product {product.ProductName} not enough according to your input quantity";
                                     check = false;
                                 }
+                                var consignmentDetail = consignmentDetailRepository.GetConsignmentDetails(product.ProductId, (int)product.Status);
+                                if(product.TotalQuantity > consignmentDetail.Quantity)
+                                {
+                                    msgErrorQuantity = $"The quantity of Product {product.ProductName} \nin consignment have ID {consignmentDetail.ConsignmentId} not enough";
+                                    check = false;
+                                }
+                                var listConsignmentID = consignmentDetailRepository.getConsignmentIDByProductID(product.ProductId);
+                                if(listConsignmentID.Count == 0)
+                                {
+                                    msgErrorQuantity = $"The total Product {product.ProductName} not enough according to your input quantity";
+                                    check = false;
+                                }
                                 amount = amount + (product.TotalQuantity * product.ImportPrice);
+                                if (!check)
+                                {
+                                    break;
+                                }
                             }
                             if (!check)
                             {

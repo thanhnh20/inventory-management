@@ -169,10 +169,10 @@ namespace WebApplication.Pages.AdminPages
                         int index = 1;
                         
                         foreach (var item in a)
-                        {
-                            index++;
+                        {               
                             foreach (var o in item.InvoiceOutputDetails)
                             {
+                                index++;
                                 worksheet.Cell(index, 1).Value = o.OutputBill.OutputBillId;
                                 worksheet.Cell(index, 2).Value = o.OutputBill.Customer.CustomerName;
                                 var user = _userRepo.GetUserByID(o.OutputBill.UserId);

@@ -101,10 +101,11 @@ namespace WebApplication.Pages.AdminPages
                         int index = 1;
 
                         foreach (var item in a)
-                        {                                
+                        {
                             index++;
                             foreach (var o in item.InvoiceInputDetails)
-                            {                               
+                            {
+                                
                                 worksheet.Cell(index, 1).Value = o.InputBill.InputBillId;
                                 worksheet.Cell(index, 2).Value = o.InputBill.Suplier.SuplierName;
                                 var user = userRepository.GetUserByID(o.InputBill.UserId);

@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Library.Model
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@{
+    var account = Context.Session.GetString("STAFF");
+    User AccountSession = null;
+    if(account != null)
+    {
+        AccountSession = JsonConvert.DeserializeObject<User>(account);
+    }  
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -36,9 +47,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="../Products/Statistic">View Products Statistic</a>
                         </li>
+                        @if(AccountSession != null)
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-primary" asp-area="" asp-page="" >@AccountSession.FullName</a>
+                            </li>
+                        }        
                         <li class="nav-item">
                             <a class="btn btn-danger" asp-area="" asp-page="../StaffPages/MainPage" asp-page-handler="LogOut">Log out</a>
                         </li>
+
                     </ul>
                 </div>
             </div>

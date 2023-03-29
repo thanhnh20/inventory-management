@@ -25,5 +25,7 @@ namespace Library.Repository.RepositoryImpl
         public List<ConsignmentDetail> GetConsignmentDetails() => ConsignmentDetailDAO.Instance.GetConsignmentDetails();
 
         public List<ConsignmentDetail> GetConsignmentDetailsOutput() => ConsignmentDetailDAO.Instance.GetConsignmentDetailsOutput();
+
+        public ConsignmentDetail GetConsignmentDetails(int productID, int consignmentID) => ConsignmentDetailDAO.Instance.GetCOnsignmentDetails((int)productID, consignmentID);
     }
 }

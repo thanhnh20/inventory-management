@@ -92,5 +92,13 @@ namespace Library.DataAccess
                     .ToList();
             }
         }
+
+        public ConsignmentDetail GetCOnsignmentDetails(int productID, int consignmentID)
+        {
+            using(var db = new InventoryManagementContext())
+            {
+                return db.ConsignmentDetails.Where(l => l.ProductId == productID && l.ConsignmentId == consignmentID).FirstOrDefault();
+            }
+        }
     }
 }

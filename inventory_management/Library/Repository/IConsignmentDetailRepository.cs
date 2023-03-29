@@ -21,5 +21,7 @@ namespace Library.Repository
         public List<ConsignmentDetail> GetConsignmentDetails();
 
         public List<ConsignmentDetail> GetConsignmentDetailsOutput();
+
+        public ConsignmentDetail GetConsignmentDetails(int productID, int consignmentID);
     }
 }

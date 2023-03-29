@@ -46,7 +46,7 @@ namespace WebApplication.Pages.StaffPages
             {
                 _logger.LogError(ex.Message + " at MainPageModel");
                 Error = ex.Message;
-
+                return Redirect("~/HomePages/Home");
             }
             return Page();
         }
